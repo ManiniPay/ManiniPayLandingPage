@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaFacebook, FaYoutube, FaTwitter, FaInstagram } from "react-icons/fa";
 
 export const ManiniPayLanding = () => {
+
+  const [showVideo, setShowVideo] = useState(false)
   return (
     <div
       className="min-h-screen text-white relative overflow-hidden"
-      style={{
-        fontFamily: "'Inter', sans-serif",
-      }}
+       style={{
+    background: `linear-gradient(160deg, #003B2F 0%, #0A8D5E 40%, #00A86B 70%, #39FF14 100%)`,
+  }}
     >
       {/* ANIMATED BACKGROUND */}
       {/* <div className="absolute inset-0 -z-10 animate-gradient bg-[length:400%_400%]" /> */}
@@ -47,10 +49,48 @@ export const ManiniPayLanding = () => {
         >
             Manini Pay – Pacific First Hybrid. Borderless Forever.
         </motion.h1>
+
+
         <p className="text-lg italic mb-4">— across islands and across borders.</p>
-        <button onClick={() => window.open("https://youtu.be/rANxOZNVuRo?si=Z5yCCcRRuKIBwRlm", "_blank")} className="bg-white text-green-900 font-semibold px-6 py-2 rounded-full mb-6 hover:bg-green-100 transition">
-            Play Official Launch Video
+        <button
+          onClick={() => setShowVideo(true)}
+          className="bg-white text-green-900 font-semibold px-6 py-2 rounded-full mb-6 hover:bg-green-100 transition"
+        >
+          Play Official Launch Video
         </button>
+
+        {/* Video Modal Popup */}
+        {showVideo && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50"
+            onClick={() => setShowVideo(false)} // Close modal on background click
+          >
+            <div
+              className="relative w-11/12 md:w-3/4 lg:w-1/2 aspect-video"
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
+            >
+              <iframe
+  src="https://www.youtube.com/embed/rANxOZNVuRo?si=Z5yCCcRRuKIBwRlm"
+  title="Manini Pay Official Launch Video"
+  allow="autoplay; encrypted-media"
+  allowFullScreen
+  className="w-full h-full rounded-lg"
+></iframe>
+
+
+              <button
+                onClick={() => setShowVideo(false)}
+                className="absolute top-2 right-2 text-white bg-red-600 rounded-full px-3 py-1 font-bold hover:bg-red-700"
+                aria-label="Close video"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        )}
+
+  
+        
         <p className="text-xl max-w-2xl mx-auto">
           A wallet built by the Pacific, for the Pacific – and beyond.
         </p>
