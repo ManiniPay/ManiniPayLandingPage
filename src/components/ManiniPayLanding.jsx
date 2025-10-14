@@ -11,7 +11,12 @@ export const ManiniPayLanding = () => {
       }}
     >
       {/* ANIMATED BACKGROUND */}
-      <div className="absolute inset-0 -z-10 animate-gradient bg-[length:400%_400%]" />
+      {/* <div className="absolute inset-0 -z-10 animate-gradient bg-[length:400%_400%]" /> */}
+
+          <div
+  className="absolute inset-0 -z-10 bg-cover bg-center"
+  style={{ backgroundImage: "url('/backgroundimage2.jpeg')" }}
+/>
 
       <style>
         {`
@@ -43,7 +48,7 @@ export const ManiniPayLanding = () => {
             Manini Pay – Pacific First Hybrid. Borderless Forever.
         </motion.h1>
         <p className="text-lg italic mb-4">— across islands and across borders.</p>
-        <button className="bg-white text-green-900 font-semibold px-6 py-2 rounded-full mb-6 hover:bg-green-100 transition">
+        <button onClick={() => window.open("https://youtu.be/rANxOZNVuRo?si=Z5yCCcRRuKIBwRlm", "_blank")} className="bg-white text-green-900 font-semibold px-6 py-2 rounded-full mb-6 hover:bg-green-100 transition">
             Play Official Launch Video
         </button>
         <p className="text-xl max-w-2xl mx-auto">

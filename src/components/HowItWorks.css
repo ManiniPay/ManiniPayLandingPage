@@ -1,0 +1,32 @@
+.how-it-works {
+  max-width: 1200px !important;
+  margin: auto !important;
+  text-align: center !important;
+  
+
+}
+
+.body {
+  background-color: #ACB7B6;
+}
+
+.step,
+.receiver-step {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin: 10px 0;
+  padding: 15px;
+  background: #f9f9f9;
+
+  /* Elevation effect */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.step:hover,
+.receiver-step:hover {
+  /* Slight lift on hover */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
