@@ -42,7 +42,7 @@ const HowItWorks = () => {
           </motion.div>
         ))}
       </div>
-      <h2>For the Receiver</h2>
+      <h2 className='receiver'>For the Receiver</h2>
       <div className="receiver-steps">
         {receiverSteps.map((step, index) => (
           <motion.div

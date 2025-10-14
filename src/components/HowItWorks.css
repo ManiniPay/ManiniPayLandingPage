@@ -5,50 +5,63 @@
   text-align: center;
   padding: 40px 20px;
   border-radius: 12px;
-  color: white;
+  color: black;
+  background-color: black;
   font-family: 'Segoe UI', sans-serif;
 
-  background: linear-gradient(160deg, #005645 0%, #17A87E 40%, #31C48D 70%, #6FFF66 100%);
+  background: #C5C9C6;
 }
 
 /* Page body background slightly lighter */
 body {
-  background-color: #015C48;
+  background-color: lightgray;
   color: white;
 }
 
-/* Card styles – lighter background for better contrast */
-.step,
-.receiver-step {
-  border: none;
-  border-radius: 12px;
-  margin: 16px 0;
-  padding: 20px;
-
-  background: rgba(0, 128, 96, 0.85); /* Lighter green with more opacity */
-  color: white;
-
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+.steps,
+.receiver-steps {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center children horizontally */
+  margin-top:2px;
 }
+
 
 .step:hover,
 .receiver-step:hover {
-  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.3);
-  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  transform: translateY(-3px);
 }
+
+
+
 
 /* Card headings */
 .step,
 .receiver-step {
-  background: rgba(0, 128, 96, 0.4); /* much lighter */
-  border-radius: 30px;
-  margin: 16px 0;
-  padding: 20px;
+  max-width: 600px;
+  width: 100%;          /* makes card take full width up to max-width */
+  margin: 8px 0;        /* vertical spacing only */
+  padding: 8px 16px;
+  border-radius: 16px;
+  background: #08A173;
   color: white;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
+  font-size: 0.95rem;
+  text-align: center;
 }
+
+.record {
+  background-color: #f0f0f0; /* lighter grey */
+  color: black;
+  padding: 10px; /* optional for spacing */
+  margin-bottom: 8px; /* optional for spacing between records */
+  border-radius: 4px; /* optional for rounded corners */
+}
+
+
+
 
 
 
@@ -63,7 +76,7 @@ body {
 .how-it-works h1 {
   font-size: 2.5rem;
   margin-bottom: 30px;
-  color: white;
+  color: black;
 }
 
 .how-it-works h2 {
@@ -73,6 +86,14 @@ body {
   margin-bottom: 20px;
   color: white;
 }
+
+.how-it-works .receiver {
+  color: black;
+  font-weight: 600;
+   font-size: 2.5rem;
+}
+
+
 
 h1, h2 {
   font-weight: 500;
