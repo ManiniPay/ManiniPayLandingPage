@@ -12,6 +12,10 @@
   background: #C5C9C6;
 }
 
+.steps .step {
+  padding-top:2px;
+}
+
 /* Page body background slightly lighter */
 body {
   background-color: lightgray;
@@ -23,7 +27,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center; /* center children horizontally */
-  margin-top:2px;
+  margin-top:2px !important;
 }
 
 
@@ -50,6 +54,8 @@ body {
   transition: box-shadow 0.3s ease, transform 0.3s ease;
   font-size: 0.95rem;
   text-align: center;
+  border: dashed 2px solid #FFFFFF !important;
+  cursor: pointer;
 }
 
 .record {
@@ -98,3 +104,18 @@ body {
 h1, h2 {
   font-weight: 500;
 }
+
+.alignment {
+  text-align: center;
+  padding: 5px;
+}
+
+.how-it-works p {
+  padding-top: 2px;
+}
+
+.title-align {
+  margin-top:20px !important;
+}
+
+

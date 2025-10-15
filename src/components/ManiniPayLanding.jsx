@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaFacebook, FaYoutube, FaTwitter, FaInstagram } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export const ManiniPayLanding = () => {
 
@@ -19,6 +20,19 @@ export const ManiniPayLanding = () => {
   className="absolute inset-0 -z-10 bg-cover bg-center"
   style={{ backgroundImage: "url('/backgroundimage2.jpeg')" }}
 />
+
+<div className="absolute top-6 right-10 z-20">
+<button
+  type="button"
+  onClick={() => window.open('https://accounts.zoho.com.au/', '_blank')}
+  className="w-52 bg-green-400 hover:bg-green-300 px-6 py-3 rounded-full font-semibold transition-all duration-200 text-sm shadow-lg hover:shadow-xl transform hover:scale-105"
+  style={{ color: 'black' }}
+>
+  Login to CRM
+</button>
+
+
+</div>
 
       <style>
         {`
@@ -115,8 +129,9 @@ export const ManiniPayLanding = () => {
         <p className="mt-4">This is more than a signup — it’s your seat on the canoe.</p>
         <div className="mt-6 space-x-4">
           <button className="bg-white text-green-800 px-6 py-2 rounded-full font-semibold hover:bg-green-200">
-              Download MVP Simulation
+              How it Works
           </button>
+         
           <button className="bg-yellow-400 text-green-900 px-6 py-2 rounded-full font-semibold hover:bg-yellow-300">
             Join the Movement
           </button>
@@ -164,9 +179,7 @@ export const ManiniPayLanding = () => {
         </ul>
         <p className="mt-4 font-semibold">One Pacific. One Movement. One Dream.</p>
         <div className="mt-6 space-x-4">
-          <button className="bg-white text-green-800 px-6 py-2 rounded-full font-semibold hover:bg-green-200">
-            Try MVP Simulation
-          </button>
+          
           <button className="bg-yellow-400 text-green-900 px-6 py-2 rounded-full font-semibold hover:bg-yellow-300">
             Join Waitlist
           </button>
@@ -271,7 +284,7 @@ export const ManiniPayLanding = () => {
       <footer className="text-center py-10 text-sm bg-green-900 bg-opacity-60">
         <div className="space-x-4 mb-4">
           <a href="#" className="hover:underline">
-            MVP Download
+            How it Works
           </a>{" "}
           |
           <a href="#" className="hover:underline">
@@ -282,9 +295,7 @@ export const ManiniPayLanding = () => {
             Official Video
           </a>{" "}
           |
-          <a href="#" className="hover:underline">
-            Contact
-          </a>{" "}
+          <Link to="/contact" className="hover:underline">Contact</Link>
           |
           <a href="#" className="hover:underline">
             Privacy
