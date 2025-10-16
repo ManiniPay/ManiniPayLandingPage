@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaFacebook, FaYoutube, FaTwitter, FaInstagram } from "react-icons/fa";
-import { Link } from "react-router-dom";
+
 
 export const ManiniPayLanding = () => {
 
@@ -142,14 +142,15 @@ export const ManiniPayLanding = () => {
       {/* WHY WE EXIST */}
       <section className="px-6 md:px-20 py-10 text-left bg-green-800 bg-opacity-30 rounded-2xl mx-4 md:mx-10 mt-10">
         <h2 className="text-3xl font-bold mb-4 text-center">  Why We Exist</h2>
-        <ul className="space-y-2 text-lg">
-          <li>  1.7B unbanked globally.</li>
-          <li>  800M in Asia Pacific without bank accounts.</li>
-          <li>  Pacific families lose USD 2.8B yearly in remittance fees.</li>
-          <li>  Up to 26% charged to send money home.</li>
-          <li>  More than 50% of Australia’s First Peoples lack access to banking.</li>
-          <li>  Asia Pacific raising poverty line with our live real-time payment.</li>
-        </ul>
+       <ul className="space-y-2 text-lg">
+  <li>➤ 1.7B unbanked globally.</li>
+  <li>➤ 800M in Asia Pacific without bank accounts.</li>
+  <li>➤ Pacific families lose USD 2.8B yearly in remittance fees.</li>
+  <li>➤ Up to 26% charged to send money home.</li>
+  <li>➤ More than 50% of Australia’s First Peoples lack access to banking.</li>
+  <li>➤ Asia Pacific raising poverty line with our live real-time payment.</li>
+</ul>
+
         <p className="mt-4 text-center font-semibold">
           Families → money leaves the Pacific → opportunity lost.
           <br />
@@ -194,11 +195,12 @@ export const ManiniPayLanding = () => {
           Where we are now → MVP → Full Launch → Scaling Nations
         </p>
         <ul className="space-y-2 text-lg">
-          <li>• 2025 Q4 → MVP Release (.mpk file, simulation data).</li>
-          <li>• 2026 Q1–Q2 → Pilot programs in Australia, Fiji & Tonga.</li>
-          <li>• 2026 Q3–Q4 → Full Launch with regional partners & diaspora rollout.</li>
-          <li>• 2027–2030 → Scaling across all Pacific nations + Asia-Pacific.</li>
-        </ul>
+  <li>➤ 2025 Q4 → MVP Release (.mpk file, simulation data).</li>
+  <li>➤ 2026 Q1–Q2 → Pilot programs in Australia, Fiji & Tonga.</li>
+  <li>➤ 2026 Q3–Q4 → Full Launch with regional partners & diaspora rollout.</li>
+  <li>➤ 2027–2030 → Scaling across all Pacific nations + Asia-Pacific.</li>
+</ul>
+
         <p className="mt-4 text-center font-semibold">
             Be one of the first 1,010 to test the MVP and shape the Pacific’s future wallet.
         </p>
@@ -220,27 +222,46 @@ export const ManiniPayLanding = () => {
         <div className="grid md:grid-cols-2 gap-8 text-left">
           <div className="bg-green-700 bg-opacity-40 p-6 rounded-2xl shadow-lg">
             <h3 className="text-2xl font-semibold mb-4">  For Users & Communities</h3>
-            <ul className="space-y-2 text-lg">
-              <li>  No more high fees.</li>
-              <li>  Send money instantly — funds settle in real time.</li>
-              <li>  Works on any phone.</li>
-              <li>  Your feedback shapes the final product.</li>
-              <li>  Live fraud detection keeps your money safe.</li>
-              <li>  No more standing in long lines — get cash out instantly.</li>
-              <li>
-                  Kids’ controlled accounts — teach financial literacy and give kids safe access to
-                funds.
-              </li>
-            </ul>
+            <ul className="space-y-2 text-lg list-none">
+  <li className="before:content-['➤'] before:mr-2 before:text-yellow-400">
+    No more high fees.
+  </li>
+  <li className="before:content-['➤'] before:mr-2 before:text-yellow-400">
+    Send money instantly — funds settle in real time.
+  </li>
+  <li className="before:content-['➤'] before:mr-2 before:text-yellow-400">
+    Works on any phone.
+  </li>
+  <li className="before:content-['➤'] before:mr-2 before:text-yellow-400">
+    Your feedback shapes the final product.
+  </li>
+  <li className="before:content-['➤'] before:mr-2 before:text-yellow-400">
+    Live fraud detection keeps your money safe.
+  </li>
+  <li className="before:content-['➤'] before:mr-2 before:text-yellow-400">
+    No more standing in long lines — get cash out instantly.
+  </li>
+  <li className="before:content-['➤'] before:mr-2 before:text-yellow-400">
+    Kids’ controlled accounts — teach financial literacy and give kids safe access to funds.
+  </li>
+</ul>
+
           </div>
 
           <div className="bg-green-700 bg-opacity-40 p-6 rounded-2xl shadow-lg">
             <h3 className="text-2xl font-semibold mb-4">  For Partners & Investors</h3>
-            <ul className="space-y-2 text-lg">
-              <li>  Align with a mission-driven movement.</li>
-              <li>  A once-in-a-generation transformation.</li>
-              <li>  Profitable + Purpose-driven.</li>
-            </ul>
+           <ul className="space-y-2 text-lg list-none">
+  <li className="before:content-['➤'] before:mr-2 before:text-yellow-400">
+    Align with a mission-driven movement.
+  </li>
+  <li className="before:content-['➤'] before:mr-2 before:text-yellow-400">
+    A once-in-a-generation transformation.
+  </li>
+  <li className="before:content-['➤'] before:mr-2 before:text-yellow-400">
+    Profitable + Purpose-driven.
+  </li>
+</ul>
+
             <div className="mt-4 space-x-4">
               <button className="bg-white text-green-800 px-6 py-2 rounded-full font-semibold hover:bg-green-200">
                 Contact Us Today
@@ -295,7 +316,9 @@ export const ManiniPayLanding = () => {
             Official Video
           </a>{" "}
           |
-          <Link to="/contact" className="hover:underline">Contact</Link>
+          <a href="#" className="hover:underline">
+            Contact
+          </a>{" "}
           |
           <a href="#" className="hover:underline">
             Privacy

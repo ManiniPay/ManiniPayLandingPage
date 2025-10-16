@@ -33,7 +33,7 @@ const HowItWorks = () => {
   };
 
   return (
-    <div className="how-it-works py-20 px-4 bg-white" style={{ color: 'black' }}>
+    <div className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-200" style={{ color: 'black' }}>
       <h1 className="text-4xl font-bold text-center mb-10">How Manini Works</h1>
 
       <div className="steps grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -53,7 +53,7 @@ const HowItWorks = () => {
         ))}
       </div>
 
-      <h2 className="text-3xl font-bold text-center my-12 !text-black">For the Receiver</h2>
+      <h2 className="text-4xl font-bold text-center mb-10 pt-6">For the Receiver</h2>
 
       <div className="receiver-steps grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
         {receiverSteps.map((step, index) => (
@@ -66,8 +66,8 @@ const HowItWorks = () => {
             variants={animationVariants}
             transition={{ delay: index * 0.3, duration: 1 }}
           >
-            <h2 className="text-lg font-semibold mb-2">{step.title}</h2>
-            <p>{step.description}</p>
+            <h2 className="title-align text-lg font-semibold mb-2">{step.title}</h2>
+            <p className=''>{step.description}</p>
           </motion.div>
         ))}
       </div>

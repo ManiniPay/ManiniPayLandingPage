@@ -1,26 +1,17 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import ManiniPayLanding from "./components/ManiniPayLanding";
 import HowItWorks from "./components/HowItWorks";
-import ContactPage from "./pages/ContactPage";
+import Contact from "./components/contactSection"; // Assuming this is the correct component
+// If you still need ContactPage somewhere, you can import it too
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <ManiniPayLanding />
-              <HowItWorks />
-            </>
-          }
-        />
-        <Route path="/contact" element={<ContactPage />} />
-      </Routes>
-    </Router>
+    <>
+      <ManiniPayLanding />
+      <Contact />
+      <HowItWorks />
+    </>
   );
 }
 
