@@ -9,8 +9,8 @@ function App() {
   return (
     <>
       <ManiniPayLanding />
-      <Contact />
-      <HowItWorks />
+   
+      
     </>
   );
 }

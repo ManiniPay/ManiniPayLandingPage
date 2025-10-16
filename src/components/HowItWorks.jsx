@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import './HowItWorks.css';
+import React from "react";
+import { motion } from "framer-motion";
+import "./HowItWorks.css";
 
 const HowItWorks = () => {
   const steps = [
@@ -19,55 +19,71 @@ const HowItWorks = () => {
   ];
 
   const animationVariants = {
-    hidden: { opacity: 0, y: 100, scale: 0.95 },
+    hidden: { opacity: 0, y: 80, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
       transition: {
         type: "spring",
-        stiffness: 80,
-        damping: 12,
-      }
-    }
+        stiffness: 120,
+        damping: 10,
+      },
+    },
   };
 
   return (
-    <div className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-200" style={{ color: 'black' }}>
-      <h1 className="text-4xl font-bold text-center mb-10">How Manini Works</h1>
+    <div className="how-it-works bg-white py-6 sm:py-12 px-3 sm:px-6 text-black">
+      {/* Main Title */}
+      <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-10">
+        How Manini Works
+      </h1>
 
-      <div className="steps grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      {/* Sender Steps */}
+      <div className="steps grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
         {steps.map((step, index) => (
           <motion.div
             key={index}
-            className="step bg-green-100 p-2 rounded-lg shadow-lg alignment"
+            className="step bg-green-100 p-3 sm:p-5 rounded-lg shadow-lg border-2 border-dashed border-green-400 text-center hover:shadow-2xl hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-500"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={animationVariants}
-            transition={{ delay: index * 0.3, duration: 1 }}
+            transition={{ delay: index * 0.15 }}
           >
-            <h2 className="title-align text-xl font-semibold mb-2">{step.title}</h2>
-            <p className='align-desc'>{step.description}</p>
+            <h2 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold mb-1 sm:mb-2">
+              {step.title}
+            </h2>
+            <p className="text-[10px] sm:text-xs md:text-sm lg:text-base leading-relaxed">
+              {step.description}
+            </p>
           </motion.div>
         ))}
       </div>
 
-      <h2 className="text-4xl font-bold text-center mb-10 pt-6">For the Receiver</h2>
+      {/* Receiver Title */}
+      <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-center my-6 sm:my-10">
+        For the Receiver
+      </h2>
 
-      <div className="receiver-steps grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      {/* Receiver Steps */}
+      <div className="receiver-steps grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto">
         {receiverSteps.map((step, index) => (
           <motion.div
             key={index}
-            className="receiver-step bg-blue-100 p-6 rounded-lg shadow-lg"
+            className="receiver-step bg-blue-100 p-3 sm:p-5 rounded-lg shadow-lg border-2 border-dashed border-blue-400 text-center hover:shadow-2xl hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-500"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={animationVariants}
-            transition={{ delay: index * 0.3, duration: 1 }}
+            transition={{ delay: index * 0.15 }}
           >
-            <h2 className="title-align text-lg font-semibold mb-2">{step.title}</h2>
-            <p className=''>{step.description}</p>
+            <h2 className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold mb-1 sm:mb-2">
+              {step.title}
+            </h2>
+            <p className="text-[10px] sm:text-xs md:text-sm lg:text-base leading-relaxed">
+              {step.description}
+            </p>
           </motion.div>
         ))}
       </div>
