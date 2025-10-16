@@ -44,17 +44,16 @@ const HowItWorks = () => {
         {steps.map((step, index) => (
           <motion.div
             key={index}
-            className="step bg-green-100 p-3 sm:p-5 rounded-lg shadow-lg border-2 border-dashed border-green-400 text-center hover:shadow-2xl hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-500"
+            className="step bg-green-100 p-4 sm:p-5 rounded-lg shadow-lg border-2 border-dashed border-green-400 text-center hover:shadow-2xl hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-500"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
             variants={animationVariants}
             transition={{ delay: index * 0.15 }}
           >
-            <h2 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold mb-1 sm:mb-2">
+            <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-3">
               {step.title}
             </h2>
-            <p className="text-[10px] sm:text-xs md:text-sm lg:text-base leading-relaxed">
+            <p className="text-sm sm:text-base leading-relaxed">
               {step.description}
             </p>
           </motion.div>
@@ -62,29 +61,30 @@ const HowItWorks = () => {
       </div>
 
       {/* Receiver Title */}
-      <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-center my-6 sm:my-10">
-        For the Receiver
-      </h2>
+    <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-10">
+        For The Receiver
+      </h1>
 
       {/* Receiver Steps */}
       <div className="receiver-steps grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto">
         {receiverSteps.map((step, index) => (
           <motion.div
-            key={index}
-            className="receiver-step bg-blue-100 p-3 sm:p-5 rounded-lg shadow-lg border-2 border-dashed border-blue-400 text-center hover:shadow-2xl hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-500"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={animationVariants}
-            transition={{ delay: index * 0.15 }}
-          >
-            <h2 className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold mb-1 sm:mb-2">
-              {step.title}
-            </h2>
-            <p className="text-[10px] sm:text-xs md:text-sm lg:text-base leading-relaxed">
-              {step.description}
-            </p>
-          </motion.div>
+  key={index}
+  className="receiver-step bg-blue-100 p-4 sm:p-5 rounded-lg shadow-lg border-2 border-dashed border-blue-400 text-center hover:shadow-2xl hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-500"
+  initial="hidden"
+  whileInView="visible"
+  variants={animationVariants}
+  transition={{ delay: index * 0.15 }}
+>
+  <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-3">
+    {step.title}
+  </h2>
+  <p className="text-sm sm:text-base leading-relaxed">
+    {step.description}
+  </p>
+</motion.div>
+
+
         ))}
       </div>
     </div>
