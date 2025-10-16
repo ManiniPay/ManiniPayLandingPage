@@ -54,7 +54,7 @@ body {
   transition: box-shadow 0.3s ease, transform 0.3s ease;
   font-size: 0.95rem;
   text-align: center;
-  border: dashed 2px solid #FFFFFF !important;
+  border: 2px dashed #FFFFFF !important;
   cursor: pointer;
 }
 
