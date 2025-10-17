@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { FaFacebook, FaYoutube, FaTwitter, FaInstagram } from "react-icons/fa";
 import HowItWorks from "./HowItWorks";
 import Contact from "./contactSection";
+import { Link } from "react-router-dom";
 
 export const ManiniPayLanding = () => {
   const [showVideo, setShowVideo] = useState(false);
@@ -351,9 +352,9 @@ export const ManiniPayLanding = () => {
             Contact
           </a>{" "}
           |
-          <a href="#" className="hover:underline">
-            Privacy
-          </a>{" "}
+          <Link to="/privacy" className="hover:underline">
+  Privacy
+</Link>{" "}
           |
           <a href="#" className="hover:underline">
             Terms of Use

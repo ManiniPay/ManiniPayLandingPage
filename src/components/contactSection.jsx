@@ -106,16 +106,7 @@ export default function ContactSection() {
       className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-gray-50 to-white"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-gray-900">
-            Impact & <span className="text-green-600">Community Stories</span>
-          </h2>
-          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-6 sm:mb-8">
-            We’re on a journey together — building a platform that makes digital payments simple, affordable, and trusted for our Pacific people.
-            <br /> This is about you, your family, and your village. We’d love to hear your voice:
-          </p>
-        </div>
-
+      
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
           {/* Contact / Signup Form */}
           <div className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 relative overflow-hidden shadow-lg border border-gray-200">
@@ -130,7 +121,7 @@ export default function ContactSection() {
                   <Rocket className="w-6 sm:w-8 h-6 sm:h-8 text-white" />
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-bold mb-2 text-gray-900">
-                  Sign Up & Impact Pool
+                  Join the Movement
                 </h3>
                 <p className="text-gray-600 text-base sm:text-lg">
                   Join our community and help shape the future of financial access
@@ -276,7 +267,7 @@ export default function ContactSection() {
                     ) : (
                       <>
                         <Rocket className="w-5 h-5 sm:w-6 sm:h-6" />
-                        <span>Join Early Impact</span>
+                        <span>Join the Movement</span>
                       </>
                     )}
                   </Button>
@@ -298,47 +289,6 @@ export default function ContactSection() {
 
           {/* Contact Info & CTAs */}
           <div className="space-y-6 sm:space-y-8">
-            <div className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-200">
-              <h4 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-gray-900">
-                Get Involved
-              </h4>
-              <div className="space-y-3 sm:space-y-4">
-                <div className="flex items-center space-x-3">
-                  <Mail className="text-green-600 flex-shrink-0" size={20} />
-                  <div>
-                    <div className="font-semibold text-gray-900 text-sm sm:text-base">
-                      General Inquiries
-                    </div>
-                    <div className="text-gray-600 text-xs sm:text-sm">
-                      welcome@maninipay.com
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Phone className="text-green-500 flex-shrink-0" size={20} />
-                  <div>
-                    <div className="font-semibold text-gray-900 text-sm sm:text-base">
-                      Phone
-                    </div>
-                    <div className="text-gray-600 text-xs sm:text-sm">
-                      +61 4 51059746
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <MapPin className="text-green-400 flex-shrink-0" size={20} />
-                  <div>
-                    <div className="font-semibold text-gray-900 text-sm sm:text-base">
-                      Pacific Region
-                    </div>
-                    <div className="text-gray-600 text-xs sm:text-sm">
-                      Serving Pacific & Asia-Pacific Communities
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <div className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-200">
               <h4 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-gray-900">
                 Contact Us
