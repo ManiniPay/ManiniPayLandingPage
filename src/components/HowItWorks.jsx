@@ -62,9 +62,10 @@ const HowItWorks = () => {
       </div>
 
       {/* Receiver Title */}
-    <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center mt-6 sm:mt-0 mb-6 sm:mb-10">
+   <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center mt-8 sm:mt-0 pt-4 sm:pt-0 mb-6 sm:mb-10">
   For The Receiver
 </h1>
+
 
 
       {/* Receiver Steps */}
