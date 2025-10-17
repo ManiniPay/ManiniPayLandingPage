@@ -356,9 +356,9 @@ export const ManiniPayLanding = () => {
   Privacy
 </Link>{" "}
           |
-          <a href="#" className="hover:underline">
+          <Link to="/terms" className="hover:underline">
             Terms of Use
-          </a>
+          </Link>
         </div>
         <div className="flex justify-center space-x-4 mb-4">
           <FaFacebook />
