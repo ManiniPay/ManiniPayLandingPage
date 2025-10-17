@@ -50,9 +50,9 @@ const HowItWorks = () => {
             variants={animationVariants}
             transition={{ delay: index * 0.15 }}
           >
-             <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-3 leading-normal sm:leading-snug md:leading-snug">
-  {step.title}
-</h2>
+              <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-3 mt-0 leading-[1.1] sm:leading-snug md:leading-snug">
+    {step.title}
+  </h2>
 
 <p className="text-base sm:text-base leading-relaxed -mt-2 sm:mt-0">
   {step.description}
@@ -69,25 +69,23 @@ const HowItWorks = () => {
       {/* Receiver Steps */}
       <div className="receiver-steps grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto">
         {receiverSteps.map((step, index) => (
-          <motion.div
+         <motion.div
   key={index}
-  className="receiver-step bg-blue-100 p-4 sm:p-5 rounded-lg shadow-lg border-2 border-dashed border-blue-400 text-center hover:shadow-2xl hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-500"
+  className="receiver-step bg-blue-100 pt-1 px-4 pb-4 sm:p-5 rounded-lg shadow-lg border-2 border-dashed border-blue-400 text-center hover:shadow-2xl hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-500"
   initial="hidden"
   whileInView="visible"
   variants={animationVariants}
   transition={{ delay: index * 0.15 }}
 >
-  <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-3 leading-normal sm:leading-snug md:leading-snug">
-  {step.title}
-</h2>
+  <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-3 mt-0 leading-[1.1] sm:leading-snug md:leading-snug">
+    {step.title}
+  </h2>
 
-<p className="text-base sm:text-base leading-relaxed -mt-2 sm:mt-0">
-  {step.description}
-</p>
-
-
-
+  <p className="text-base sm:text-base leading-relaxed -mt-2 sm:mt-0">
+    {step.description}
+  </p>
 </motion.div>
+
 
 
         ))}
