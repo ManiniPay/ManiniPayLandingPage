@@ -29,17 +29,16 @@ export const ManiniPayLanding = () => {
         style={{ backgroundImage: "url('/backgroundimage2.jpeg')" }}
       />
 
-      <div className="w-full flex justify-center md:absolute md:top-6 md:right-10 z-20 mt-6 md:mt-0">
-  <button
-    type="button"
-    onClick={() => window.open('https://accounts.zoho.com.au/', '_blank')}
-    className="w-52 bg-green-400 hover:bg-green-300 px-6 py-3 rounded-full font-semibold transition-all duration-200 text-sm shadow-lg hover:shadow-xl transform hover:scale-105"
-    style={{ color: 'black' }}
-  >
-    Login to CRM
-  </button>
-</div>
-
+      <div className="absolute top-6 right-10 z-20">
+        <button
+          type="button"
+          onClick={() => window.open('https://accounts.zoho.com.au/', '_blank')}
+          className="w-52 bg-green-400 hover:bg-green-300 px-6 py-3 rounded-full font-semibold transition-all duration-200 text-sm shadow-lg hover:shadow-xl transform hover:scale-105"
+          style={{ color: 'black' }}
+        >
+          Login to CRM
+        </button>
+      </div>
 
       <style>
         {`
@@ -138,22 +137,12 @@ export const ManiniPayLanding = () => {
             How it Works
           </button>
          
-<div className="w-full !flex !justify-center md:!justify-end px-4 mt-6 z-20">
-  <button
-    type="button"
-    onClick={() => window.open('https://accounts.zoho.com.au/', '_blank')}
-    className="w-52 bg-green-400 hover:bg-green-300 px-6 py-3 rounded-full font-semibold transition-all duration-200 text-sm shadow-lg hover:shadow-xl transform hover:scale-105 text-black"
-  >
-    Login to CRM
-  </button>
-</div>
-
-
-
-
-
-
-
+          <button 
+            onClick={() => scrollToSection(twoJourneysRef)}
+            className="bg-yellow-400 text-green-900 px-6 py-2 rounded-full font-semibold hover:bg-yellow-300"
+          >
+            Join the Movement
+          </button>
         </div>
         <hr className="border-white opacity-40 my-8 w-3/4 mx-auto" />
       </section>
