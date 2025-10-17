@@ -50,12 +50,13 @@ const HowItWorks = () => {
             variants={animationVariants}
             transition={{ delay: index * 0.15 }}
           >
-            <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-3">
-              {step.title}
-            </h2>
-            <p className="text-sm sm:text-base leading-relaxed">
-              {step.description}
-            </p>
+             <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-3 leading-normal sm:leading-snug md:leading-snug">
+  {step.title}
+</h2>
+
+<p className="text-base sm:text-base leading-relaxed -mt-2 sm:mt-0">
+  {step.description}
+</p>
           </motion.div>
         ))}
       </div>
@@ -76,12 +77,16 @@ const HowItWorks = () => {
   variants={animationVariants}
   transition={{ delay: index * 0.15 }}
 >
-  <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-3">
-    {step.title}
-  </h2>
-  <p className="text-sm sm:text-base leading-relaxed">
-    {step.description}
-  </p>
+  <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-3 leading-normal sm:leading-snug md:leading-snug">
+  {step.title}
+</h2>
+
+<p className="text-base sm:text-base leading-relaxed -mt-2 sm:mt-0">
+  {step.description}
+</p>
+
+
+
 </motion.div>
 
 

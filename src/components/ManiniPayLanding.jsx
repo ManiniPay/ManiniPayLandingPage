@@ -29,16 +29,17 @@ export const ManiniPayLanding = () => {
         style={{ backgroundImage: "url('/backgroundimage2.jpeg')" }}
       />
 
-      <div className="absolute top-6 right-10 z-20">
-        <button
-          type="button"
-          onClick={() => window.open('https://accounts.zoho.com.au/', '_blank')}
-          className="w-52 bg-green-400 hover:bg-green-300 px-6 py-3 rounded-full font-semibold transition-all duration-200 text-sm shadow-lg hover:shadow-xl transform hover:scale-105"
-          style={{ color: 'black' }}
-        >
-          Login to CRM
-        </button>
-      </div>
+     <div className="absolute top-6 left-1/2 transform -translate-x-1/2 md:left-auto md:right-10 z-20">
+  <button
+    type="button"
+    onClick={() => window.open('https://accounts.zoho.com.au/', '_blank')}
+    className="w-52 bg-green-400 hover:bg-green-300 px-6 py-3 rounded-full font-semibold transition-all duration-200 text-sm shadow-lg hover:shadow-xl transform hover:scale-105"
+    style={{ color: 'black' }}
+  >
+    Login to CRM
+  </button>
+</div>
+
 
       <style>
         {`
@@ -129,21 +130,22 @@ export const ManiniPayLanding = () => {
           <li>Instant transfers – no more 26% fees.</li>
         </ul>
         <p className="mt-4">This is more than a signup — it's your seat on the canoe.</p>
-        <div className="mt-6 space-x-4">
-          <button 
-            onClick={() => scrollToSection(howItWorksRef)}
-            className="bg-white text-green-800 px-6 py-2 rounded-full font-semibold hover:bg-green-200"
-          >
-            How it Works
-          </button>
-         
-          <button 
-            onClick={() => scrollToSection(twoJourneysRef)}
-            className="bg-yellow-400 text-green-900 px-6 py-2 rounded-full font-semibold hover:bg-yellow-300"
-          >
-            Join the Movement
-          </button>
-        </div>
+        <div className="mt-6 flex justify-center gap-4">
+
+  <button 
+    onClick={() => scrollToSection(howItWorksRef)}
+    className="bg-white text-green-800 px-6 py-2 rounded-full font-semibold hover:bg-green-200"
+  >
+    How it Works
+  </button>
+  <button 
+    onClick={() => scrollToSection(twoJourneysRef)}
+    className="bg-yellow-400 text-green-900 px-6 py-2 rounded-full font-semibold hover:bg-yellow-300"
+  >
+    Join the Movement
+  </button>
+</div>
+
         <hr className="border-white opacity-40 my-8 w-3/4 mx-auto" />
       </section>
 
@@ -273,7 +275,8 @@ export const ManiniPayLanding = () => {
               </li>
             </ul>
 
-            <div className="mt-4 space-x-4">
+            <div className="mt-4 flex justify-center gap-4">
+
               <button className="bg-white text-green-800 px-6 py-2 rounded-full font-semibold hover:bg-green-200">
                 Contact Us Today
               </button>
