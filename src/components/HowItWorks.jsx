@@ -35,9 +35,9 @@ const HowItWorks = () => {
   return (
     <div className="how-it-works bg-white py-6 sm:py-12 px-3 sm:px-6 text-black">
       {/* Main Title */}
-      <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-10">
-        How Manini Works
-      </h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-10 leading-snug sm:leading-tight">
+  How Manini Works
+</h1>
 
       {/* Sender Steps */}
       <div className="steps grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
@@ -62,9 +62,10 @@ const HowItWorks = () => {
       </div>
 
       {/* Receiver Title */}
-    <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-10">
-        For The Receiver
-      </h1>
+    <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center mt-6 sm:mt-0 mb-6 sm:mb-10">
+  For The Receiver
+</h1>
+
 
       {/* Receiver Steps */}
       <div className="receiver-steps grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto">
