@@ -18,6 +18,112 @@ export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
+  // Zoho credentials
+  const ZOHO_CLIENT_ID = '1000.IIGZ8L7NK6XUX2DRRV4FP08IL7T8WP';
+  const ZOHO_CLIENT_SECRET = '16fac23924ba4667b2a23349664380a12c6e9fb6c3';
+  
+  // Fallback: Pre-generated access token (generate once manually and paste here)
+  const FALLBACK_ACCESS_TOKEN = 'YOUR_PRE_GENERATED_ACCESS_TOKEN_HERE';
+
+  // Token management functions
+  const getStoredToken = () => {
+    const tokenData = localStorage.getItem('zoho_token');
+    if (tokenData) {
+      const parsed = JSON.parse(tokenData);
+      // Check if token is still valid (not expired)
+      if (parsed.expires_at > Date.now()) {
+        return parsed.access_token;
+      }
+    }
+    return null;
+  };
+
+  const storeToken = (tokenData) => {
+    const expiresAt = Date.now() + (tokenData.expires_in * 1000);
+    localStorage.setItem('zoho_token', JSON.stringify({
+      access_token: tokenData.access_token,
+      refresh_token: tokenData.refresh_token,
+      expires_at: expiresAt
+    }));
+  };
+
+  const generateAccessToken = async () => {
+    try {
+      // Method 1: Try using refresh token if available
+      const storedToken = localStorage.getItem('zoho_token');
+      if (storedToken) {
+        const parsed = JSON.parse(storedToken);
+        if (parsed.refresh_token) {
+          console.log('Using refresh token to get new access token...');
+          const refreshUrl = `https://accounts.zoho.com/oauth/v2/token?refresh_token=${parsed.refresh_token}&client_id=${ZOHO_CLIENT_ID}&client_secret=${ZOHO_CLIENT_SECRET}&grant_type=refresh_token`;
+          
+          const response = await fetch(refreshUrl);
+          const tokenData = await response.json();
+          
+          if (tokenData.access_token) {
+            console.log('Token refreshed successfully:', tokenData);
+            storeToken(tokenData);
+            return tokenData.access_token;
+          }
+        }
+      }
+
+      // Method 2: Try Self Client approach (no user interaction)
+      console.log('Trying Self Client approach...');
+      const selfClientUrl = `https://accounts.zoho.com/oauth/v2/token?scope=ZohoCRM.modules.ALL&client_id=${ZOHO_CLIENT_ID}&client_secret=${ZOHO_CLIENT_SECRET}&grant_type=client_credentials`;
+      
+      const response = await fetch(selfClientUrl);
+      const tokenData = await response.json();
+      
+      if (tokenData.access_token) {
+        console.log('Self Client token generated:', tokenData);
+        storeToken(tokenData);
+        return tokenData.access_token;
+      }
+
+      // Method 3: Try using Self Client with different scope
+      console.log('Trying Self Client with different scope...');
+      const selfClientUrl2 = `https://accounts.zoho.com/oauth/v2/token?scope=ZohoCRM.modules.leads.ALL&client_id=${ZOHO_CLIENT_ID}&client_secret=${ZOHO_CLIENT_SECRET}&grant_type=client_credentials`;
+      
+      const response2 = await fetch(selfClientUrl2);
+      const tokenData2 = await response2.json();
+      
+      if (tokenData2.access_token) {
+        console.log('Self Client token generated with leads scope:', tokenData2);
+        storeToken(tokenData2);
+        return tokenData2.access_token;
+      }
+
+      // Method 4: Use fallback token if available
+      if (FALLBACK_ACCESS_TOKEN && FALLBACK_ACCESS_TOKEN !== 'YOUR_PRE_GENERATED_ACCESS_TOKEN_HERE') {
+        console.log('Using fallback access token...');
+        return FALLBACK_ACCESS_TOKEN;
+      }
+
+      // Method 5: If all else fails, show error with instructions
+      throw new Error('Unable to generate access token automatically. Please generate an access token manually once and paste it in FALLBACK_ACCESS_TOKEN.');
+      
+    } catch (error) {
+      console.error('Token generation error:', error);
+      throw error;
+    }
+  };
+
+  const getValidAccessToken = async () => {
+    // First, try to get stored token
+    let accessToken = getStoredToken();
+    
+    if (accessToken) {
+      console.log('Using stored access token');
+      return accessToken;
+    }
+    
+    // If no valid stored token, generate a new one
+    console.log('No valid stored token, generating new one...');
+    accessToken = await generateAccessToken();
+    return accessToken;
+  };
+
   const validateForm = () => {
     const { firstName, lastName, email, phone, password } = formData;
     if (!firstName || !lastName || !email || !phone || !password) {
@@ -37,6 +143,7 @@ export default function ContactSection() {
     return null;
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -52,35 +159,53 @@ export default function ContactSection() {
       return;
     }
 
-    const payload = {
-      signup: {
-        firstname: formData.firstName,
-        lastname: formData.lastName,
-        country_code: 'IN',
-        rmobile: formData.phone, // if you need encryption, do it before this
-        email: formData.email,
-        password: formData.password,
-        country: 'IN',
-        country_state: 'Uttar Pradesh',
-        tos: 'true',
-        serviceurl: 'https://accounts.zoho.com.au/home',
-        servicename: 'AaaServer',
-        load_country: 'false',
-        newsletter: 'false',
-        mode: '24',
-      },
-    };
-
     try {
-      const response = await axios.post(
-        'https://accounts.zoho.in/webclient/v1/register/initiate',
-        payload
-      );
-      console.log('Zoho response:', response.data);
+      // Get a valid access token (either from storage or generate new one)
+      const accessToken = await getValidAccessToken();
+      console.log('Using access token:', accessToken);
+
+      // Zoho CRM Lead creation payload using form data
+      const leadData = {
+        data: [
+          {
+            First_Name: formData.firstName,
+            Last_Name: formData.lastName,
+            Email: formData.email,
+            Phone: formData.phone,
+            Company: 'ManiniPay',
+            Lead_Source: 'Website',
+            Description: 'Interested in joining the ManiniPay movement',
+            Industry: 'Financial Services',
+            Lead_Status: 'Not Contacted'
+          }
+        ]
+      };
+
+      console.log('Sending lead data to Zoho CRM:', JSON.stringify(leadData, null, 2));
+      
+      const response = await fetch('https://www.zohoapis.com/crm/v2/Leads', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Zoho-oauthtoken ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(leadData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Zoho CRM Error:', errorData);
+        throw new Error(errorData.message || 'Failed to create lead in Zoho CRM');
+      }
+
+      const data = await response.json();
+      console.log('Zoho CRM Success:', data);
+      
       toast({
         title: 'Success',
-        description: 'Your request has been submitted.',
+        description: 'Thank you! Your information has been saved and we\'ll contact you soon.',
       });
+      
       setFormData({
         firstName: '',
         lastName: '',
@@ -89,10 +214,11 @@ export default function ContactSection() {
         password: '',
       });
     } catch (error) {
-      console.error('API error:', error);
+      console.error('Error:', error);
+      
       toast({
         title: 'Submission Failed',
-        description: 'Something went wrong. Please try again later.',
+        description: error.message || 'Something went wrong. Please try again later.',
         variant: 'destructive',
       });
     } finally {
