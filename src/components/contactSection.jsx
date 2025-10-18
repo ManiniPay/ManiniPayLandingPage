@@ -142,21 +142,17 @@ export default function ContactSection() {
       console.log('Using access token:', accessToken);
 
       // Zoho CRM Lead creation payload using form data
-      const leadData = {
-        data: [
-          {
-            First_Name: formData.firstName,
-            Last_Name: formData.lastName,
-            Email: formData.email,
-            Phone: formData.phone,
-            Company: 'ManiniPay',
-            Lead_Source: 'Website',
-            Description: 'Interested in joining the ManiniPay movement',
-            Industry: 'Financial Services',
-            Lead_Status: 'Not Contacted'
-          }
-        ]
-      };
+        // Try minimal payload first
+        const leadData = {
+          data: [
+            {
+              First_Name: formData.firstName,
+              Last_Name: formData.lastName,
+              Email: formData.email,
+              Phone: formData.phone
+            }
+          ]
+        };
 
       console.log('Sending lead data to Zoho CRM:', JSON.stringify(leadData, null, 2));
       
@@ -171,8 +167,13 @@ export default function ContactSection() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error('Zoho CRM Error:', errorData);
-        throw new Error(errorData.message || 'Failed to create lead in Zoho CRM');
+        console.error('Zoho CRM Error Details:', {
+          status: response.status,
+          statusText: response.statusText,
+          error: errorData,
+          payload: leadData
+        });
+        throw new Error(`Zoho CRM Error (${response.status}): ${errorData.message || errorData.details || 'Failed to create lead'}`);
       }
 
       const data = await response.json();
