@@ -23,7 +23,7 @@ export default function ContactSection() {
   const ZOHO_CLIENT_SECRET = '16fac23924ba4667b2a23349664380a12c6e9fb6c3';
   
   // Fallback: Pre-generated access token (generate once manually and paste here)
-  const FALLBACK_ACCESS_TOKEN = 'YOUR_PRE_GENERATED_ACCESS_TOKEN_HERE';
+    const FALLBACK_ACCESS_TOKEN = '1000.001fa0cc9ea936e19663d52bf895f31f.69818db46d6768cfd1ace477c8ddce9d';
 
   // Token management functions
   const getStoredToken = () => {
@@ -55,7 +55,7 @@ export default function ContactSection() {
         const parsed = JSON.parse(storedToken);
         if (parsed.refresh_token) {
           console.log('Using refresh token to get new access token...');
-          const refreshUrl = `https://accounts.zoho.com/oauth/v2/token?refresh_token=${parsed.refresh_token}&client_id=${ZOHO_CLIENT_ID}&client_secret=${ZOHO_CLIENT_SECRET}&grant_type=refresh_token`;
+          const refreshUrl = `https://accounts.zoho.com/oauth/v2/token?refresh_token=${parsed.refresh_token}&client_id=${ZOHO_CLIENT_ID}&client_secret=${ZOHO_CLIENT_SECRET}&redirect_uri=https://manini-pay-landing-page.vercel.app/&grant_type=refresh_token`;
           
           const response = await fetch(refreshUrl);
           const tokenData = await response.json();
@@ -68,31 +68,8 @@ export default function ContactSection() {
         }
       }
 
-      // Method 2: Try Self Client approach (no user interaction)
-      console.log('Trying Self Client approach...');
-      const selfClientUrl = `https://accounts.zoho.com/oauth/v2/token?scope=ZohoCRM.modules.ALL&client_id=${ZOHO_CLIENT_ID}&client_secret=${ZOHO_CLIENT_SECRET}&grant_type=client_credentials`;
-      
-      const response = await fetch(selfClientUrl);
-      const tokenData = await response.json();
-      
-      if (tokenData.access_token) {
-        console.log('Self Client token generated:', tokenData);
-        storeToken(tokenData);
-        return tokenData.access_token;
-      }
-
-      // Method 3: Try using Self Client with different scope
-      console.log('Trying Self Client with different scope...');
-      const selfClientUrl2 = `https://accounts.zoho.com/oauth/v2/token?scope=ZohoCRM.modules.leads.ALL&client_id=${ZOHO_CLIENT_ID}&client_secret=${ZOHO_CLIENT_SECRET}&grant_type=client_credentials`;
-      
-      const response2 = await fetch(selfClientUrl2);
-      const tokenData2 = await response2.json();
-      
-      if (tokenData2.access_token) {
-        console.log('Self Client token generated with leads scope:', tokenData2);
-        storeToken(tokenData2);
-        return tokenData2.access_token;
-      }
+      // Method 2: Self Client not supported (400 error expected)
+      console.log('Self Client approach not supported for this application (400 error expected)');
 
       // Method 4: Use fallback token if available
       if (FALLBACK_ACCESS_TOKEN && FALLBACK_ACCESS_TOKEN !== 'YOUR_PRE_GENERATED_ACCESS_TOKEN_HERE') {
@@ -100,8 +77,8 @@ export default function ContactSection() {
         return FALLBACK_ACCESS_TOKEN;
       }
 
-      // Method 5: If all else fails, show error with instructions
-      throw new Error('Unable to generate access token automatically. Please generate an access token manually once and paste it in FALLBACK_ACCESS_TOKEN.');
+      // Method 3: If all else fails, show error with instructions
+      throw new Error('Unable to generate access token automatically. Self Client is not supported. Please generate an access token manually once using the URLs provided and paste it in FALLBACK_ACCESS_TOKEN.');
       
     } catch (error) {
       console.error('Token generation error:', error);
@@ -183,7 +160,7 @@ export default function ContactSection() {
 
       console.log('Sending lead data to Zoho CRM:', JSON.stringify(leadData, null, 2));
       
-      const response = await fetch('https://www.zohoapis.com/crm/v2/Leads', {
+        const response = await fetch('https://www.zohoapis.com.au/crm/v2/Leads', {
         method: 'POST',
         headers: {
           'Authorization': `Zoho-oauthtoken ${accessToken}`,
