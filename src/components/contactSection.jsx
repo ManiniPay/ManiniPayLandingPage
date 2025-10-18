@@ -142,20 +142,20 @@ export default function ContactSection() {
       console.log('Using access token:', accessToken);
 
       // Zoho CRM Lead creation payload using form data
-        // Try minimal payload first
+        // Try minimal payload - just name and email
         const leadData = {
           data: [
             {
               First_Name: formData.firstName,
               Last_Name: formData.lastName,
-              Email: formData.email,
-              Phone: formData.phone
+              Email: formData.email
             }
           ]
         };
 
       console.log('Sending lead data to Zoho CRM:', JSON.stringify(leadData, null, 2));
       
+        // Try v2 API first (more stable)
         const response = await fetch('https://www.zohoapis.com.au/crm/v2/Leads', {
         method: 'POST',
         headers: {
@@ -166,14 +166,32 @@ export default function ContactSection() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch (e) {
+          errorData = { message: 'Failed to parse error response' };
+        }
+        
         console.error('Zoho CRM Error Details:', {
           status: response.status,
           statusText: response.statusText,
           error: errorData,
-          payload: leadData
+          payload: leadData,
+          responseText: await response.text()
         });
-        throw new Error(`Zoho CRM Error (${response.status}): ${errorData.message || errorData.details || 'Failed to create lead'}`);
+        
+        // Log the full error for debugging
+        console.error('Full error response:', errorData);
+        
+        // Show detailed error in UI for debugging
+        toast({
+          title: 'Debug Info',
+          description: `Status: ${response.status} | Error: ${JSON.stringify(errorData)}`,
+          variant: 'destructive',
+        });
+        
+        throw new Error(`Zoho CRM Error (${response.status}): ${JSON.stringify(errorData)}`);
       }
 
       const data = await response.json();
