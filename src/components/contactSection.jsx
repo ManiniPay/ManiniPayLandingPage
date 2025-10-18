@@ -186,10 +186,20 @@ export default function ContactSection() {
         // Log the full error for debugging
         console.error('Full error response:', errorData);
         
-        // Show detailed error in UI for debugging
+        // Show user-friendly error message
+        let errorMessage = 'Something went wrong. Please try again later.';
+        
+        if (errorData.error) {
+          errorMessage = errorData.error;
+        } else if (errorData.message) {
+          errorMessage = errorData.message;
+        } else if (errorData.details && errorData.details.message) {
+          errorMessage = errorData.details.message;
+        }
+        
         toast({
-          title: 'Debug Info',
-          description: `Status: ${response.status} | Error: ${JSON.stringify(errorData)}`,
+          title: '❌ Submission Failed',
+          description: errorMessage,
           variant: 'destructive',
         });
         
@@ -199,10 +209,20 @@ export default function ContactSection() {
       const data = await response.json();
       console.log('Zoho CRM Success:', data);
       
-      toast({
-        title: 'Success',
-        description: 'Thank you! Your information has been saved and we\'ll contact you soon.',
-      });
+      // Check if the API response indicates success
+      if (data.success && data.data && data.data.data && data.data.data[0]) {
+        const leadInfo = data.data.data[0];
+        
+        toast({
+          title: '🎉 Success!',
+          description: `Thank you! Your information has been saved successfully. Lead ID: ${leadInfo.details.id}`,
+        });
+      } else {
+        toast({
+          title: 'Success',
+          description: 'Thank you! Your information has been saved and we\'ll contact you soon.',
+        });
+      }
       
       setFormData({
         firstName: '',
@@ -214,9 +234,16 @@ export default function ContactSection() {
     } catch (error) {
       console.error('Error:', error);
       
+      // Show user-friendly error message
+      let errorMessage = 'Something went wrong. Please try again later.';
+      
+      if (error.message) {
+        errorMessage = error.message;
+      }
+      
       toast({
-        title: 'Submission Failed',
-        description: error.message || 'Something went wrong. Please try again later.',
+        title: '❌ Submission Failed',
+        description: errorMessage,
         variant: 'destructive',
       });
     } finally {
