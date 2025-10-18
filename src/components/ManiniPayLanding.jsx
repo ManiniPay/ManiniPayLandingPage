@@ -11,6 +11,7 @@ export const ManiniPayLanding = () => {
   // Create refs for the sections
   const howItWorksRef = useRef(null);
   const twoJourneysRef = useRef(null);
+  const contactRef = useRef(null);
 
   // Scroll function
   const scrollToSection = (ref) => {
@@ -140,7 +141,7 @@ export const ManiniPayLanding = () => {
     How it Works
   </button>
   <button 
-    onClick={() => scrollToSection(twoJourneysRef)}
+    onClick={() => scrollToSection(contactRef)}
     className="bg-yellow-400 text-green-900 px-6 py-2 rounded-full font-semibold hover:bg-yellow-300"
   >
     Join the Movement
@@ -191,7 +192,7 @@ export const ManiniPayLanding = () => {
         <p className="mt-4 font-semibold">One Pacific. One Movement. One Dream.</p>
         <div className="mt-6 space-x-4">
           <button 
-            onClick={() => scrollToSection(twoJourneysRef)}
+            onClick={() => scrollToSection(contactRef)}
             className="bg-yellow-400 text-green-900 px-6 py-2 rounded-full font-semibold hover:bg-yellow-300"
           >
             Join Waitlist
@@ -221,7 +222,7 @@ export const ManiniPayLanding = () => {
         </p>
         <div className="text-center mt-6">
           <button 
-            onClick={() => scrollToSection(twoJourneysRef)}
+            onClick={() => scrollToSection(contactRef)}
             className="bg-yellow-400 text-green-900 px-8 py-3 rounded-full font-bold hover:bg-yellow-300"
           >
             Sign Up for Early Access
@@ -311,7 +312,7 @@ export const ManiniPayLanding = () => {
           "Manini Pay is not just an app — it's a movement – This is how money moves."
         </p>
         <button 
-          onClick={() => scrollToSection(twoJourneysRef)}
+          onClick={() => scrollToSection(contactRef)}
           className="bg-yellow-400 text-green-900 px-8 py-3 rounded-full font-bold hover:bg-yellow-300"
         >
           Join the Movement Today
@@ -338,7 +339,7 @@ export const ManiniPayLanding = () => {
             className="hover:underline"
             onClick={(e) => {
               e.preventDefault();
-              scrollToSection(twoJourneysRef);
+              scrollToSection(contactRef);
             }}
           >
             Early Access
@@ -378,7 +379,9 @@ export const ManiniPayLanding = () => {
         <HowItWorks />
       </div>
       
-      <Contact />
+      <div ref={contactRef}>
+        <Contact />
+      </div>
     </div>
   );
 };

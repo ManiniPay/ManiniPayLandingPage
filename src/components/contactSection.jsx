@@ -155,15 +155,17 @@ export default function ContactSection() {
 
       console.log('Sending lead data to Zoho CRM:', JSON.stringify(leadData, null, 2));
       
-        // Try v2 API first (more stable)
-        const response = await fetch('https://www.zohoapis.com.au/crm/v2/Leads', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Zoho-oauthtoken ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(leadData),
-      });
+        // Use backend proxy to avoid CORS issues
+        const response = await fetch('/api/zoho-leads', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            leadData: leadData,
+            accessToken: accessToken
+          }),
+        });
 
       if (!response.ok) {
         let errorData;
