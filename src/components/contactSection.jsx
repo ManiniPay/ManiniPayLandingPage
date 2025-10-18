@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -7,6 +8,7 @@ import { Rocket, CheckCircle, Mail, Phone, MapPin } from 'lucide-react';
 import { useToast } from './ui/hooks/use-toast';
 
 export default function ContactSection() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -213,24 +215,32 @@ export default function ContactSection() {
       if (data.success && data.data && data.data.data && data.data.data[0]) {
         const leadInfo = data.data.data[0];
         
-        toast({
-          title: '🎉 Success!',
-          description: `Thank you! Your information has been saved successfully. Lead ID: ${leadInfo.details.id}`,
+        // Navigate to success page with lead ID
+        navigate('/success', { 
+          state: { 
+            leadId: leadInfo.details.id,
+            leadData: {
+              firstName: formData.firstName,
+              lastName: formData.lastName,
+              email: formData.email,
+              phone: formData.phone
+            }
+          } 
         });
       } else {
         toast({
           title: 'Success',
           description: 'Thank you! Your information has been saved and we\'ll contact you soon.',
         });
+        
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          password: '',
+        });
       }
-      
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        password: '',
-      });
     } catch (error) {
       console.error('Error:', error);
       
