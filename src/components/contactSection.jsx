@@ -52,38 +52,88 @@ export default function ContactSection() {
     }));
   };
 
-  const generateAccessToken = async () => {
-    try {
-      // Method 1: Try using refresh token if available
-      const storedToken = localStorage.getItem('zoho_token');
-      if (storedToken) {
-        const parsed = JSON.parse(storedToken);
-        if (parsed.refresh_token) {
-          console.log('Using refresh token to get new access token...');
-          const refreshUrl = `https://accounts.zoho.com/oauth/v2/token?refresh_token=${parsed.refresh_token}&client_id=${ZOHO_CLIENT_ID}&client_secret=${ZOHO_CLIENT_SECRET}&redirect_uri=https://manini-pay-landing-page.vercel.app/&grant_type=refresh_token`;
+  const refreshAccessTokenFromRefreshToken = async (refreshToken) => {
+    const redirectUris = [
+      'https://manini-pay-landing-page.vercel.app/',
+      'https://maninipay.com/',
+      'https://www.maninipay.com/'
+    ];
+
+    // Try AU domain first (since authorization came from com.au)
+    const zohoDomains = ['accounts.zoho.com.au', 'accounts.zoho.com'];
+
+    for (const domain of zohoDomains) {
+      for (const redirectUri of redirectUris) {
+        try {
+          const refreshUrl = `https://${domain}/oauth/v2/token?refresh_token=${refreshToken}&client_id=${ZOHO_CLIENT_ID}&client_secret=${ZOHO_CLIENT_SECRET}&redirect_uri=${encodeURIComponent(redirectUri)}&grant_type=refresh_token`;
           
-          const response = await fetch(refreshUrl);
+          const response = await fetch(refreshUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+          });
+          
           const tokenData = await response.json();
           
           if (tokenData.access_token) {
-            console.log('Token refreshed successfully:', tokenData);
+            console.log('✅ Token refreshed successfully');
+            // Preserve refresh token if not in response
+            if (!tokenData.refresh_token) {
+              tokenData.refresh_token = refreshToken;
+            }
             storeToken(tokenData);
             return tokenData.access_token;
           }
+        } catch (error) {
+          console.error('Token refresh attempt failed:', error);
+        }
+      }
+    }
+    return null;
+  };
+
+  const generateAccessToken = async () => {
+    try {
+      // Method 1: Try using refresh token from localStorage
+      const storedToken = localStorage.getItem('zoho_token');
+      if (storedToken) {
+        try {
+          const parsed = JSON.parse(storedToken);
+          if (parsed.refresh_token) {
+            console.log('Using refresh token from storage to get new access token...');
+            const newToken = await refreshAccessTokenFromRefreshToken(parsed.refresh_token);
+            if (newToken) return newToken;
+          }
+        } catch (e) {
+          console.error('Error reading stored token:', e);
         }
       }
 
-      // Method 2: Self Client not supported (400 error expected)
-      console.log('Self Client approach not supported for this application (400 error expected)');
+      // Method 2: Try using constant refresh token
+      if (REFRESH_TOKEN && REFRESH_TOKEN.trim() !== '') {
+        console.log('Using constant refresh token to generate new access token...');
+        const newToken = await refreshAccessTokenFromRefreshToken(REFRESH_TOKEN);
+        if (newToken) {
+          // Store it for future use
+          const tokenData = {
+            access_token: newToken,
+            refresh_token: REFRESH_TOKEN,
+            expires_in: 3600
+          };
+          storeToken(tokenData);
+          return newToken;
+        }
+      }
 
-      // Method 4: Use fallback token if available
+      // Method 3: Use fallback token if available
       if (FALLBACK_ACCESS_TOKEN && FALLBACK_ACCESS_TOKEN !== 'YOUR_PRE_GENERATED_ACCESS_TOKEN_HERE') {
         console.log('Using fallback access token...');
         return FALLBACK_ACCESS_TOKEN;
       }
 
-      // Method 3: If all else fails, show error with instructions
-      throw new Error('Unable to generate access token automatically. Self Client is not supported. Please generate an access token manually once using the URLs provided and paste it in FALLBACK_ACCESS_TOKEN.');
+      // Method 4: If all else fails
+      throw new Error('Unable to generate access token. Please check REFRESH_TOKEN or FALLBACK_ACCESS_TOKEN.');
       
     } catch (error) {
       console.error('Token generation error:', error);
@@ -92,17 +142,34 @@ export default function ContactSection() {
   };
 
   const getValidAccessToken = async () => {
-    // First, try to get stored token
-    let accessToken = getStoredToken();
+    // Clear any invalid stored tokens first
+    const storedToken = getStoredToken();
+    if (!storedToken) {
+      // Clear localStorage if token expired
+      localStorage.removeItem('zoho_token');
+    }
     
-    if (accessToken) {
-      console.log('Using stored access token');
-      return accessToken;
+    // First, try to get stored token (with 5 min buffer)
+    if (storedToken) {
+      const bufferTime = 5 * 60 * 1000; // 5 minutes
+      const tokenData = localStorage.getItem('zoho_token');
+      if (tokenData) {
+        try {
+          const parsed = JSON.parse(tokenData);
+          if (parsed.expires_at > (Date.now() + bufferTime)) {
+            console.log('Using stored access token');
+            return storedToken;
+          }
+        } catch (e) {
+          // Invalid token, clear it
+          localStorage.removeItem('zoho_token');
+        }
+      }
     }
     
     // If no valid stored token, generate a new one
     console.log('No valid stored token, generating new one...');
-    accessToken = await generateAccessToken();
+    const accessToken = await generateAccessToken();
     return accessToken;
   };
 
