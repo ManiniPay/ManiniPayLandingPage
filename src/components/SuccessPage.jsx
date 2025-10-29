@@ -73,7 +73,7 @@ const SuccessPage = () => {
         <div className="text-center px-2">
           <p className="text-xs sm:text-sm opacity-90 leading-relaxed">
             Need immediate assistance? 
-            <a href="mailto:support@maninipay.com" className="text-white hover:underline ml-1 font-semibold">
+            <a href="mailto:info@maninipay.com" className="text-white hover:underline ml-1 font-semibold">
               Contact our support team
             </a>
           </p>

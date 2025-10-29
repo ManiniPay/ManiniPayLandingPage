@@ -20,6 +20,14 @@ export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
+  // Get the current domain dynamically
+  const getCurrentDomain = () => {
+    if (typeof window !== 'undefined') {
+      return window.location.origin;
+    }
+    return 'https://maninipay.com'; // fallback
+  };
+
   // Zoho credentials
   const ZOHO_CLIENT_ID = '1000.IIGZ8L7NK6XUX2DRRV4FP08IL7T8WP';
   const ZOHO_CLIENT_SECRET = '16fac23924ba4667b2a23349664380a12c6e9fb6c3';
@@ -57,12 +65,26 @@ export default function ContactSection() {
         const parsed = JSON.parse(storedToken);
         if (parsed.refresh_token) {
           console.log('Using refresh token to get new access token...');
-          const refreshUrl = `https://accounts.zoho.com/oauth/v2/token?refresh_token=${parsed.refresh_token}&client_id=${ZOHO_CLIENT_ID}&client_secret=${ZOHO_CLIENT_SECRET}&redirect_uri=https://manini-pay-landing-page.vercel.app/&grant_type=refresh_token`;
+          const currentDomain = getCurrentDomain();
+          const redirectUri = `${currentDomain}/`;
           
-          const response = await fetch(refreshUrl);
+          const refreshUrl = `https://accounts.zoho.com/oauth/v2/token?refresh_token=${parsed.refresh_token}&client_id=${ZOHO_CLIENT_ID}&client_secret=${ZOHO_CLIENT_SECRET}&redirect_uri=${encodeURIComponent(redirectUri)}&grant_type=refresh_token`;
+          
+          const response = await fetch(refreshUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+          });
+          
           const tokenData = await response.json();
           
-          if (tokenData.access_token) {
+          if (tokenData.error) {
+            console.error('Token refresh failed:', tokenData);
+            // Clear invalid token from storage
+            localStorage.removeItem('zoho_token');
+            // Fall through to use fallback token
+          } else if (tokenData.access_token) {
             console.log('Token refreshed successfully:', tokenData);
             storeToken(tokenData);
             return tokenData.access_token;
@@ -70,17 +92,14 @@ export default function ContactSection() {
         }
       }
 
-      // Method 2: Self Client not supported (400 error expected)
-      console.log('Self Client approach not supported for this application (400 error expected)');
-
-      // Method 4: Use fallback token if available
+      // Method 2: Use fallback token if available
       if (FALLBACK_ACCESS_TOKEN && FALLBACK_ACCESS_TOKEN !== 'YOUR_PRE_GENERATED_ACCESS_TOKEN_HERE') {
         console.log('Using fallback access token...');
         return FALLBACK_ACCESS_TOKEN;
       }
 
       // Method 3: If all else fails, show error with instructions
-      throw new Error('Unable to generate access token automatically. Self Client is not supported. Please generate an access token manually once using the URLs provided and paste it in FALLBACK_ACCESS_TOKEN.');
+      throw new Error('Unable to generate access token. Please regenerate an access token from Zoho and update FALLBACK_ACCESS_TOKEN.');
       
     } catch (error) {
       console.error('Token generation error:', error);
@@ -182,16 +201,61 @@ export default function ContactSection() {
           statusText: response.statusText,
           error: errorData,
           payload: leadData,
-          responseText: await response.text()
         });
         
-        // Log the full error for debugging
-        console.error('Full error response:', errorData);
+        // Handle 401 Unauthorized - token expired
+        if (response.status === 401) {
+          console.log('Access token expired, clearing stored tokens and retrying...');
+          // Clear expired tokens
+          localStorage.removeItem('zoho_token');
+          
+          // Try to get a new token and retry once
+          try {
+            const newAccessToken = await generateAccessToken();
+            console.log('Retrying with new access token...');
+            
+            const retryResponse = await fetch('/api/zoho-leads', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                leadData: leadData,
+                accessToken: newAccessToken
+              }),
+            });
+            
+            if (retryResponse.ok) {
+              const retryData = await retryResponse.json();
+              console.log('Zoho CRM Success after retry:', retryData);
+              
+              if (retryData.success && retryData.data && retryData.data.data && retryData.data.data[0]) {
+                const leadInfo = retryData.data.data[0];
+                navigate('/success', { 
+                  state: { 
+                    leadId: leadInfo.details.id,
+                    leadData: {
+                      firstName: formData.firstName,
+                      lastName: formData.lastName,
+                      email: formData.email,
+                      phone: formData.phone
+                    }
+                  } 
+                });
+                return;
+              }
+            }
+          } catch (retryError) {
+            console.error('Retry failed:', retryError);
+          }
+        }
         
         // Show user-friendly error message
         let errorMessage = 'Something went wrong. Please try again later.';
         
-        if (errorData.error) {
+        if (response.status === 401) {
+          errorMessage = 'Authentication failed. Please refresh the page and try again.';
+        } else if (errorData.error) {
           errorMessage = errorData.error;
         } else if (errorData.message) {
           errorMessage = errorData.message;
