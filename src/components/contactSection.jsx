@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from './ui/button';
@@ -24,8 +24,11 @@ export default function ContactSection() {
   const ZOHO_CLIENT_ID = '1000.IIGZ8L7NK6XUX2DRRV4FP08IL7T8WP';
   const ZOHO_CLIENT_SECRET = '16fac23924ba4667b2a23349664380a12c6e9fb6c3';
   
+  // Refresh token - Set this once, tokens will auto-refresh every 50 minutes
+  const REFRESH_TOKEN = ''; // Paste refresh token here for automatic renewal
+  
   // Fallback: Pre-generated access token (generate once manually and paste here)
-    const FALLBACK_ACCESS_TOKEN = '1000.001fa0cc9ea936e19663d52bf895f31f.69818db46d6768cfd1ace477c8ddce9d';
+  const FALLBACK_ACCESS_TOKEN = '1000.001fa0cc9ea936e19663d52bf895f31f.69818db46d6768cfd1ace477c8ddce9d';
 
   // Token management functions
   const getStoredToken = () => {
@@ -49,38 +52,79 @@ export default function ContactSection() {
     }));
   };
 
+  const refreshAccessTokenFromRefreshToken = async (refreshToken) => {
+    const redirectUris = [
+      'https://manini-pay-landing-page.vercel.app/',
+      'https://maninipay.com/',
+      'https://www.maninipay.com/'
+    ];
+
+    for (const redirectUri of redirectUris) {
+      try {
+        const refreshUrl = `https://accounts.zoho.com/oauth/v2/token?refresh_token=${refreshToken}&client_id=${ZOHO_CLIENT_ID}&client_secret=${ZOHO_CLIENT_SECRET}&redirect_uri=${encodeURIComponent(redirectUri)}&grant_type=refresh_token`;
+        
+        const response = await fetch(refreshUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        });
+        
+        const tokenData = await response.json();
+        
+        if (tokenData.access_token) {
+          console.log('✅ Token refreshed successfully');
+          // Preserve refresh token if not in response
+          if (!tokenData.refresh_token) {
+            tokenData.refresh_token = refreshToken;
+          }
+          storeToken(tokenData);
+          return tokenData.access_token;
+        }
+      } catch (error) {
+        console.error('Token refresh attempt failed:', error);
+      }
+    }
+    return null;
+  };
+
   const generateAccessToken = async () => {
     try {
-      // Method 1: Try using refresh token if available
+      // Method 1: Try using refresh token from localStorage
       const storedToken = localStorage.getItem('zoho_token');
       if (storedToken) {
         const parsed = JSON.parse(storedToken);
         if (parsed.refresh_token) {
           console.log('Using refresh token to get new access token...');
-          const refreshUrl = `https://accounts.zoho.com/oauth/v2/token?refresh_token=${parsed.refresh_token}&client_id=${ZOHO_CLIENT_ID}&client_secret=${ZOHO_CLIENT_SECRET}&redirect_uri=https://manini-pay-landing-page.vercel.app/&grant_type=refresh_token`;
-          
-          const response = await fetch(refreshUrl);
-          const tokenData = await response.json();
-          
-          if (tokenData.access_token) {
-            console.log('Token refreshed successfully:', tokenData);
-            storeToken(tokenData);
-            return tokenData.access_token;
-          }
+          const newToken = await refreshAccessTokenFromRefreshToken(parsed.refresh_token);
+          if (newToken) return newToken;
         }
       }
 
-      // Method 2: Self Client not supported (400 error expected)
-      console.log('Self Client approach not supported for this application (400 error expected)');
+      // Method 2: Try using constant refresh token
+      if (REFRESH_TOKEN && REFRESH_TOKEN.trim() !== '') {
+        console.log('Using constant refresh token to get new access token...');
+        const newToken = await refreshAccessTokenFromRefreshToken(REFRESH_TOKEN);
+        if (newToken) {
+          // Store it for future use
+          const tokenData = {
+            access_token: newToken,
+            refresh_token: REFRESH_TOKEN,
+            expires_in: 3600
+          };
+          storeToken(tokenData);
+          return newToken;
+        }
+      }
 
-      // Method 4: Use fallback token if available
+      // Method 3: Use fallback token if available
       if (FALLBACK_ACCESS_TOKEN && FALLBACK_ACCESS_TOKEN !== 'YOUR_PRE_GENERATED_ACCESS_TOKEN_HERE') {
         console.log('Using fallback access token...');
         return FALLBACK_ACCESS_TOKEN;
       }
 
-      // Method 3: If all else fails, show error with instructions
-      throw new Error('Unable to generate access token automatically. Self Client is not supported. Please generate an access token manually once using the URLs provided and paste it in FALLBACK_ACCESS_TOKEN.');
+      // Method 4: If all else fails, show error with instructions
+      throw new Error('Unable to generate access token. Please set REFRESH_TOKEN or FALLBACK_ACCESS_TOKEN in the code.');
       
     } catch (error) {
       console.error('Token generation error:', error);
@@ -102,6 +146,26 @@ export default function ContactSection() {
     accessToken = await generateAccessToken();
     return accessToken;
   };
+
+  // Automatic token refresh every 50 minutes (tokens expire in 1 hour)
+  useEffect(() => {
+    const refreshInterval = setInterval(async () => {
+      try {
+        const storedToken = localStorage.getItem('zoho_token');
+        const refreshToken = REFRESH_TOKEN || (storedToken ? JSON.parse(storedToken).refresh_token : null);
+        
+        if (refreshToken) {
+          console.log('🔄 Auto-refreshing token before expiry...');
+          await refreshAccessTokenFromRefreshToken(refreshToken);
+        }
+      } catch (error) {
+        console.error('Auto-refresh error:', error);
+      }
+    }, 50 * 60 * 1000); // 50 minutes = 3,000,000 ms
+
+    // Cleanup interval on unmount
+    return () => clearInterval(refreshInterval);
+  }, [REFRESH_TOKEN]);
 
   const validateForm = () => {
     const { firstName, lastName, email, phone, password } = formData;
