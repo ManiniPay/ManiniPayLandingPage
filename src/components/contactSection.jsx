@@ -24,8 +24,11 @@ export default function ContactSection() {
   const ZOHO_CLIENT_ID = '1000.IIGZ8L7NK6XUX2DRRV4FP08IL7T8WP';
   const ZOHO_CLIENT_SECRET = '16fac23924ba4667b2a23349664380a12c6e9fb6c3';
   
-  // Fallback: Pre-generated access token (generate once manually and paste here)
-    const FALLBACK_ACCESS_TOKEN = '1000.001fa0cc9ea936e19663d52bf895f31f.69818db46d6768cfd1ace477c8ddce9d';
+  // Refresh token - Auto-refreshes tokens every 50 minutes (never expires)
+  const REFRESH_TOKEN = '1000.57657ba28c8bf791eead98ae6c1d2c21.a6db916f26c2b7350dbce2fbbd9590ce';
+  
+  // Fallback: Pre-generated access token (for immediate use)
+  const FALLBACK_ACCESS_TOKEN = '1000.b424b3d11cd677e050b15b658cb00551.1454b21f01609dc37490271a1c43df99';
 
   // Token management functions
   const getStoredToken = () => {
@@ -170,28 +173,74 @@ export default function ContactSection() {
         });
 
       if (!response.ok) {
+        // Read response once
+        const responseText = await response.text();
         let errorData;
         try {
-          errorData = await response.json();
+          errorData = JSON.parse(responseText);
         } catch (e) {
-          errorData = { message: 'Failed to parse error response' };
+          errorData = { message: responseText || 'Failed to parse error response' };
         }
         
         console.error('Zoho CRM Error Details:', {
           status: response.status,
           statusText: response.statusText,
           error: errorData,
-          payload: leadData,
-          responseText: await response.text()
+          payload: leadData
         });
         
-        // Log the full error for debugging
-        console.error('Full error response:', errorData);
+        // Handle 401 - token expired, clear and try refresh
+        if (response.status === 401) {
+          console.log('Token expired, clearing stored token and retrying...');
+          localStorage.removeItem('zoho_token');
+          
+          // Try once more with fresh token
+          try {
+            const newAccessToken = await getValidAccessToken();
+            console.log('Retrying with new token...');
+            
+            const retryResponse = await fetch('/api/zoho-leads', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                leadData: leadData,
+                accessToken: newAccessToken
+              }),
+            });
+            
+            if (retryResponse.ok) {
+              const retryData = await retryResponse.json();
+              console.log('✅ Success after token refresh');
+              
+              if (retryData.success && retryData.data && retryData.data.data && retryData.data.data[0]) {
+                const leadInfo = retryData.data.data[0];
+                navigate('/success', { 
+                  state: { 
+                    leadId: leadInfo.details.id,
+                    leadData: {
+                      firstName: formData.firstName,
+                      lastName: formData.lastName,
+                      email: formData.email,
+                      phone: formData.phone
+                    }
+                  } 
+                });
+                return;
+              }
+            }
+          } catch (retryError) {
+            console.error('Retry failed:', retryError);
+          }
+        }
         
         // Show user-friendly error message
         let errorMessage = 'Something went wrong. Please try again later.';
         
-        if (errorData.error) {
+        if (response.status === 401) {
+          errorMessage = 'Authentication failed. Please refresh the page and try again, or check that REFRESH_TOKEN is set.';
+        } else if (errorData.error) {
           errorMessage = errorData.error;
         } else if (errorData.message) {
           errorMessage = errorData.message;
