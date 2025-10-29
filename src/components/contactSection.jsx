@@ -53,44 +53,37 @@ export default function ContactSection() {
   };
 
   const refreshAccessTokenFromRefreshToken = async (refreshToken) => {
-    const redirectUris = [
-      'https://manini-pay-landing-page.vercel.app/',
-      'https://maninipay.com/',
-      'https://www.maninipay.com/'
-    ];
+    try {
+      // Use server-side endpoint to avoid CORS issues
+      const response = await fetch('/api/refresh-token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          refreshToken: refreshToken
+        }),
+      });
 
-    // Try AU domain first (since authorization came from com.au)
-    const zohoDomains = ['accounts.zoho.com.au', 'accounts.zoho.com'];
+      const data = await response.json();
 
-    for (const domain of zohoDomains) {
-      for (const redirectUri of redirectUris) {
-        try {
-          const refreshUrl = `https://${domain}/oauth/v2/token?refresh_token=${refreshToken}&client_id=${ZOHO_CLIENT_ID}&client_secret=${ZOHO_CLIENT_SECRET}&redirect_uri=${encodeURIComponent(redirectUri)}&grant_type=refresh_token`;
-          
-          const response = await fetch(refreshUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-          });
-          
-          const tokenData = await response.json();
-          
-          if (tokenData.access_token) {
-            console.log('✅ Token refreshed successfully');
-            // Preserve refresh token if not in response
-            if (!tokenData.refresh_token) {
-              tokenData.refresh_token = refreshToken;
-            }
-            storeToken(tokenData);
-            return tokenData.access_token;
-          }
-        } catch (error) {
-          console.error('Token refresh attempt failed:', error);
-        }
+      if (data.success && data.access_token) {
+        console.log('✅ Token refreshed successfully via server');
+        const tokenData = {
+          access_token: data.access_token,
+          refresh_token: data.refresh_token || refreshToken,
+          expires_in: data.expires_in || 3600
+        };
+        storeToken(tokenData);
+        return data.access_token;
+      } else {
+        console.error('Token refresh failed:', data);
+        return null;
       }
+    } catch (error) {
+      console.error('Token refresh error:', error);
+      return null;
     }
-    return null;
   };
 
   const generateAccessToken = async () => {
