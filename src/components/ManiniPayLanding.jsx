@@ -322,7 +322,7 @@ export const ManiniPayLanding = () => {
 
       {/* FOOTER */}
       <footer className="text-center py-10 text-sm bg-green-900 bg-opacity-60">
-        <div className="space-x-4 mb-4">
+        <div className="flex justify-center items-center space-x-4 mb-4">
           <a 
             href="#" 
             className="hover:underline"
@@ -332,8 +332,8 @@ export const ManiniPayLanding = () => {
             }}
           >
             How it Works
-          </a>{" "}
-          |
+          </a>
+          <span className="text-white">|</span>
           <a 
             href="#" 
             className="hover:underline"
@@ -343,29 +343,29 @@ export const ManiniPayLanding = () => {
             }}
           >
             Early Access
-          </a>{" "}
-          |
+          </a>
+          <span className="text-white">|</span>
           <a href="#" className="hover:underline">
             Official Video
-          </a>{" "}
-          |
+          </a>
+          <span className="text-white">|</span>
           <a href="#" className="hover:underline">
             Contact
-          </a>{" "}
-          |
+          </a>
+          <span className="text-white">|</span>
           <Link to="/privacy" className="hover:underline">
   Privacy
-</Link>{" "}
-          |
+</Link>
+          <span className="text-white">|</span>
           <Link to="/terms" className="hover:underline">
             Terms of Use
           </Link>
         </div>
         <div className="flex justify-center space-x-4 mb-4">
-          <FaFacebook />
-          <FaYoutube />
-          <FaTwitter />
-          <FaInstagram />
+          <FaFacebook className="cursor-pointer" />
+          <FaYoutube className="cursor-pointer" />
+          <FaTwitter className="cursor-pointer" />
+          <FaInstagram className="cursor-pointer" />
         </div>
         <p className="italic mb-2">"Eyes on the horizon. Paddles in the water. Together, we sail."</p>
         <p>

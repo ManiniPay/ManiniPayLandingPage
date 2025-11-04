@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Terms = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div 
       className="min-h-screen text-white relative overflow-hidden"
@@ -8,6 +15,13 @@ const Terms = () => {
         background: `#0A8D5E`,
       }}
     >
+      <button
+        onClick={() => navigate('/')}
+        className="absolute top-6 right-6 bg-green-400 hover:bg-green-300 px-6 py-3 rounded-full font-semibold transition-all duration-200 text-sm shadow-lg hover:shadow-xl transform hover:scale-105 z-10"
+        style={{ color: 'black' }}
+      >
+        Back to Home
+      </button>
       <div className="terms-of-use w-full px-4 md:px-8 lg:px-12 py-6 md:py-8 leading-relaxed font-sans">
         <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 text-center">MANINI PAY TERMS OF USE</h1>
         <p className="text-center mb-6"><strong>Effective Date:</strong> August 25, 2025</p>
