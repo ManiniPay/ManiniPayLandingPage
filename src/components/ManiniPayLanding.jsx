@@ -322,10 +322,10 @@ export const ManiniPayLanding = () => {
 
       {/* FOOTER */}
       <footer className="text-center py-10 text-sm bg-green-900 bg-opacity-60">
-        <div className="flex justify-center items-center space-x-4 mb-4">
+        <div className="flex flex-nowrap justify-center items-center gap-1 md:gap-4 mb-4 text-xs md:text-sm overflow-x-auto px-2">
           <a 
             href="#" 
-            className="hover:underline"
+            className="hover:underline whitespace-nowrap"
             onClick={(e) => {
               e.preventDefault();
               scrollToSection(howItWorksRef);
@@ -336,7 +336,7 @@ export const ManiniPayLanding = () => {
           <span className="text-white">|</span>
           <a 
             href="#" 
-            className="hover:underline"
+            className="hover:underline whitespace-nowrap"
             onClick={(e) => {
               e.preventDefault();
               scrollToSection(contactRef);
@@ -345,19 +345,19 @@ export const ManiniPayLanding = () => {
             Early Access
           </a>
           <span className="text-white">|</span>
-          <a href="#" className="hover:underline">
+          <a href="#" className="hover:underline whitespace-nowrap">
             Official Video
           </a>
           <span className="text-white">|</span>
-          <a href="#" className="hover:underline">
+          <a href="#" className="hover:underline whitespace-nowrap">
             Contact
           </a>
           <span className="text-white">|</span>
-          <Link to="/privacy" className="hover:underline">
+          <Link to="/privacy" className="hover:underline whitespace-nowrap">
   Privacy
 </Link>
           <span className="text-white">|</span>
-          <Link to="/terms" className="hover:underline">
+          <Link to="/terms" className="hover:underline whitespace-nowrap">
             Terms of Use
           </Link>
         </div>
