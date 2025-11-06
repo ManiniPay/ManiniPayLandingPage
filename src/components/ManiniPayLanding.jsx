@@ -322,7 +322,7 @@ export const ManiniPayLanding = () => {
 
       {/* FOOTER */}
       <footer className="text-center py-10 text-sm bg-green-900 bg-opacity-60">
-        <div className="flex flex-nowrap justify-center items-center gap-1 md:gap-4 mb-4 text-xs md:text-sm overflow-x-auto px-2">
+        <div className="flex flex-wrap justify-center items-center gap-x-1 gap-y-1 md:gap-4 md:flex-nowrap mb-4 text-xs md:text-sm px-2">
           <a 
             href="#" 
             className="hover:underline whitespace-nowrap"
