@@ -116,7 +116,7 @@ export const ManiniPayLanding = () => {
         <hr className="border-white opacity-40 my-8 w-3/4 mx-auto" />
       </section>
 
-      {/* FEATURES SECTION */ }
+      {/* FEATURES SECTION */}
       <section className="text-center px-6 md:px-20 py-10 bg-green-700 bg-opacity-30 rounded-2xl mx-4 md:mx-10">
         <h2 className="text-3xl font-bold mb-4">
           The First Pacific Hybrid Wallet
