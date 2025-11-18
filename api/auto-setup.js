@@ -67,6 +67,9 @@ export default async function handler(req, res) {
     <html>
       <head>
         <title>Auto Setup</title>
+        <link rel="icon" type="image/x-icon" sizes="32x32" href="/favicon.ico" />
+        <link rel="icon" type="image/x-icon" sizes="16x16" href="/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <meta http-equiv="refresh" content="1;url=${authUrl}">
         <style>
           body { font-family: Arial; text-align: center; padding: 50px; background: #f5f5f5; }
@@ -92,6 +95,9 @@ function generateSuccessPage(refreshToken, accessToken) {
     <html>
       <head>
         <title>✅ Token Generated</title>
+        <link rel="icon" type="image/x-icon" sizes="32x32" href="/favicon.ico" />
+        <link rel="icon" type="image/x-icon" sizes="16x16" href="/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <style>
           body { font-family: Arial; max-width: 800px; margin: 50px auto; padding: 20px; background: #f5f5f5; }
           .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
@@ -138,6 +144,9 @@ function generateErrorPage(error) {
     <html>
       <head>
         <title>Setup Error</title>
+        <link rel="icon" type="image/x-icon" sizes="32x32" href="/favicon.ico" />
+        <link rel="icon" type="image/x-icon" sizes="16x16" href="/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <style>
           body { font-family: Arial; text-align: center; padding: 50px; background: #f5f5f5; }
           .error { background: white; padding: 30px; border-radius: 10px; max-width: 600px; margin: 0 auto; }
