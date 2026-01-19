@@ -163,12 +163,15 @@ export default function ContactSection() {
 
   const validateForm = () => {
     const { firstName, lastName, email, phone, password } = formData;
-    if (!firstName || !lastName || !email || !phone || !password) {
-      return 'All fields are required.';
+    if (!firstName || !lastName || !phone || !password) {
+      return 'First name, last name, phone, and password are required.';
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return 'Invalid email format.';
+    // Only validate email format if email is provided
+    if (email && email.trim() !== '') {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return 'Invalid email format.';
+      }
     }
     const phoneRegex = /^\+?[0-9]{7,15}$/;
     if (!phoneRegex.test(phone)) {
@@ -202,13 +205,13 @@ export default function ContactSection() {
       console.log('Using access token:', accessToken);
 
       // Zoho CRM Lead creation payload using form data
-        // Try minimal payload - just name and email
+        // Try minimal payload - name and email (if provided)
         const leadData = {
           data: [
             {
               First_Name: formData.firstName,
               Last_Name: formData.lastName,
-              Email: formData.email
+              ...(formData.email && formData.email.trim() !== '' ? { Email: formData.email } : {})
             }
           ]
         };
@@ -682,12 +685,12 @@ export default function ContactSection() {
                       <span className="w-2 h-2 rounded-full"
                         style={{ backgroundColor: "#2D7A44" }}
                       ></span>
-                      <span>Email Address *</span>
+                      <span>Email Address</span>
                     </Label>
                     <Input
                       id="email"
                       type="email"
-                      placeholder="your.email@example.com"
+                      placeholder="your.email@example.com (optional)"
                       value={formData.email}
                       onChange={(e) =>
                         setFormData((prev) => ({
@@ -695,7 +698,6 @@ export default function ContactSection() {
                           email: e.target.value,
                         }))
                       }
-                      required
                       className="h-10 sm:h-12 bg-gray-800/50 border-gray-700 rounded-lg sm:rounded-xl transition-all duration-300 placeholder:text-gray-500 text-white hover:bg-gray-800/70 focus:bg-gray-800/80 focus:ring-2"
                       style={{ outline: "none", boxShadow: "0 0 0 1px transparent" }}
                     />

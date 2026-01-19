@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { FaFacebook, FaYoutube, FaTwitter, FaInstagram } from "react-icons/fa";
-import HowItWorks from "./HowItWorks";
 import Contact from "./contactSection";
 import { Link } from "react-router-dom";
 
@@ -9,15 +8,14 @@ export const ManiniPayLanding = () => {
   const [showVideo, setShowVideo] = useState(false);
   
   // Create refs for the sections
-  const howItWorksRef = useRef(null);
   const problemRef = useRef(null);
   const storyRef = useRef(null);
   const solutionRef = useRef(null);
   const contactRef = useRef(null);
 
-  // Scroll function
+  // Scroll function - instant jump, no smooth scrolling
   const scrollToSection = (ref) => {
-    ref.current?.scrollIntoView({ behavior: 'smooth' });
+    ref.current?.scrollIntoView({ behavior: 'auto', block: 'start' });
   };
 
   // Animation variants
@@ -79,15 +77,15 @@ export const ManiniPayLanding = () => {
                 height: '150%',
                 background: `linear-gradient(to bottom, 
                   transparent 0%, 
-                  rgba(74, 222, 128, 0.1) 20%,
-                  rgba(34, 197, 94, 0.3) 50%,
-                  rgba(74, 222, 128, 0.1) 80%,
+                  rgba(74, 222, 128, 0.25) 20%,
+                  rgba(34, 197, 94, 0.5) 50%,
+                  rgba(74, 222, 128, 0.25) 80%,
                   transparent 100%)`,
                 transform: `translate(-50%, -50%) rotate(${angle}deg)`,
                 transformOrigin: 'center',
                 animation: `ray-rotate 20s linear infinite`,
                 animationDelay: `${delay}s`,
-                boxShadow: '0 0 20px rgba(74, 222, 128, 0.5)',
+                boxShadow: '0 0 30px rgba(74, 222, 128, 0.8), 0 0 50px rgba(34, 197, 94, 0.6)',
               }}
             />
           );
@@ -113,9 +111,9 @@ export const ManiniPayLanding = () => {
                 top: `${top}%`,
                 backgroundColor: `rgba(74, 222, 128, ${opacity})`,
                 boxShadow: `
-                  0 0 ${size * 2}px rgba(74, 222, 128, 0.8),
-                  0 0 ${size * 4}px rgba(34, 197, 94, 0.6),
-                  0 0 ${size * 6}px rgba(16, 185, 129, 0.4)
+                  0 0 ${size * 3}px rgba(74, 222, 128, 1),
+                  0 0 ${size * 6}px rgba(34, 197, 94, 0.8),
+                  0 0 ${size * 9}px rgba(16, 185, 129, 0.6)
                 `,
                 animation: `sparkle-twinkle ${duration}s ease-in-out infinite`,
                 animationDelay: `${delay}s`,
@@ -140,10 +138,10 @@ export const ManiniPayLanding = () => {
                 width: `${size}px`,
                 height: `${size}px`,
                 left: `${left}%`,
-                backgroundColor: `rgba(34, 197, 94, ${0.7 + (i % 2) * 0.2})`,
+                backgroundColor: `rgba(34, 197, 94, ${0.8 + (i % 2) * 0.15})`,
                 boxShadow: `
-                  0 0 ${size * 3}px rgba(74, 222, 128, 0.9),
-                  0 0 ${size * 6}px rgba(34, 197, 94, 0.7)
+                  0 0 ${size * 4}px rgba(74, 222, 128, 1),
+                  0 0 ${size * 8}px rgba(34, 197, 94, 0.9)
                 `,
                 animation: `${animType} ${duration}s linear infinite`,
                 animationDelay: `${delay}s`,
@@ -169,11 +167,11 @@ export const ManiniPayLanding = () => {
                 height: `${size}px`,
                 left: `${left}%`,
                 top: `${top}%`,
-                backgroundColor: `rgba(16, 185, 129, 0.4)`,
+                backgroundColor: `rgba(16, 185, 129, 0.5)`,
                 boxShadow: `
-                  0 0 ${size * 4}px rgba(74, 222, 128, 0.8),
-                  0 0 ${size * 8}px rgba(34, 197, 94, 0.6),
-                  0 0 ${size * 12}px rgba(16, 185, 129, 0.4)
+                  0 0 ${size * 5}px rgba(74, 222, 128, 1),
+                  0 0 ${size * 10}px rgba(34, 197, 94, 0.8),
+                  0 0 ${size * 15}px rgba(16, 185, 129, 0.6)
                 `,
                 animation: `orb-pulse ${duration}s ease-in-out infinite`,
                 animationDelay: `${delay}s`,
@@ -273,7 +271,7 @@ export const ManiniPayLanding = () => {
                     <span className="ml-1 text-4xl md:text-5xl">▶</span>
                   </div>
                   <div className="px-4 text-sm md:text-base font-semibold tracking-wide uppercase text-emerald-100">
-                    {isLoading ? "Loading video..." : "Click to watch the hero story"}
+                    {isLoading ? "Loading video..." : "Click to watch our story"}
                   </div>
                 </button>
               )}
@@ -306,8 +304,8 @@ export const ManiniPayLanding = () => {
       </div>
 
       {/* TOP NAVBAR */}
-      <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12 min-h-[100px] flex items-center justify-between relative z-20">
-        {/* Logo on Left */}
+      <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12 min-h-[100px] flex items-center relative z-20">
+        {/* Logo */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -319,23 +317,7 @@ export const ManiniPayLanding = () => {
             className="h-10 md:h-12 lg:h-14 w-auto"
           />
         </motion.div>
-
-        {/* Login Button on Right */}
-        <motion.button
-          type="button"
-          onClick={() => window.open('https://accounts.zoho.com.au/', '_blank')}
-          className="px-4 md:px-6 py-2 md:py-3 rounded-full font-semibold transition-all duration-200 text-xs md:text-sm shadow-lg hover:shadow-xl transform hover:scale-105"
-          style={{
-            backgroundColor: "#2D7A44",
-            color: "white",
-          }}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          Login to CRM
-        </motion.button>
-</div>
+      </div>
 
       <style>
         {`
@@ -382,14 +364,14 @@ export const ManiniPayLanding = () => {
           @keyframes ray-rotate {
             0% {
               transform: translate(-50%, -50%) rotate(0deg);
-              opacity: 0.3;
+              opacity: 0.5;
             }
             50% {
-              opacity: 0.6;
+              opacity: 0.8;
             }
             100% {
               transform: translate(-50%, -50%) rotate(360deg);
-              opacity: 0.3;
+              opacity: 0.5;
             }
           }
           
@@ -482,7 +464,14 @@ export const ManiniPayLanding = () => {
        
         
         <motion.h1
-          className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 max-w-4xl relative z-10 text-white drop-shadow-lg"
+          className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-6 max-w-5xl relative z-10 text-white drop-shadow-2xl leading-tight"
+          style={{
+            background: "linear-gradient(135deg, #ffffff 0%, #e0f2fe 50%, #a7f3d0 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            textShadow: "0 0 40px rgba(74, 222, 128, 0.3)",
+          }}
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
         >
@@ -516,27 +505,37 @@ export const ManiniPayLanding = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          <button
+          <motion.button
             onClick={() => scrollToSection(contactRef)}
-            className="px-8 py-4 rounded-full font-bold text-lg transition transform hover:scale-105 shadow-lg"
+            className="px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-xl relative overflow-hidden group"
             style={{
-              backgroundColor: "#2D7A44",
+              background: "linear-gradient(135deg, #2D7A44 0%, #16a085 100%)",
               color: "white",
             }}
+            whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(45, 122, 68, 0.4)" }}
+            whileTap={{ scale: 0.98 }}
           >
-            Join Early Access
-          </button>
-          <button
+            <span className="relative z-10">Join Early Access</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+          </motion.button>
+          <motion.button
             onClick={() => setShowVideo(true)}
-            className="px-8 py-4 rounded-full font-bold text-lg transition transform hover:scale-105 shadow-lg border"
+            className="px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-xl border-2 backdrop-blur-sm relative overflow-hidden group"
             style={{
-              backgroundColor: "transparent",
-              color: "#2D7A44",
-              borderColor: "#2D7A44",
+              background: "rgba(255, 255, 255, 0.05)",
+              color: "#4ade80",
+              borderColor: "#4ade80",
             }}
+            whileHover={{ 
+              scale: 1.05, 
+              background: "rgba(74, 222, 128, 0.1)",
+              boxShadow: "0 20px 40px rgba(74, 222, 128, 0.3)"
+            }}
+            whileTap={{ scale: 0.98 }}
           >
-            Watch Our Story
-          </button>
+            <span className="relative z-10">Watch the Story</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-400/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+          </motion.button>
         </motion.div>
 
         {/* Local hero video card (performance-friendly) */}
@@ -553,8 +552,8 @@ export const ManiniPayLanding = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <iframe
-                src="https://www.youtube.com/embed/rANxOZNVuRo?si=Z5yCCcRRuKIBwRlm"
-                title="Manini Pay Official Launch Video"
+                src="https://www.youtube.com/embed/nXCMV8Ko2kc"
+                title="Manini Pay - Our Mission Story"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
                 className="w-full h-full rounded-lg"
@@ -577,7 +576,13 @@ export const ManiniPayLanding = () => {
       {/* PROBLEM SECTION */}
       <motion.section 
         ref={problemRef} 
-        className="px-6 md:px-20 py-16 text-center bg-black bg-opacity-60 backdrop-blur-sm rounded-2xl mx-4 md:mx-10 my-10 border border-green-500/20 shadow-2xl shadow-green-500/10 relative overflow-hidden"
+        className="px-6 md:px-20 py-16 text-center rounded-3xl mx-4 md:mx-10 my-10 relative overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(10, 20, 40, 0.8) 100%)",
+          backdropFilter: "blur(20px)",
+          border: "1px solid rgba(74, 222, 128, 0.2)",
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(74, 222, 128, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+        }}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -591,16 +596,10 @@ export const ManiniPayLanding = () => {
           Financial Exclusion Is Holding Us Back
         </motion.h2>
         <motion.p 
-          className="text-lg md:text-xl mb-4 max-w-3xl mx-auto text-gray-300"
-          variants={fadeInUp}
-        >
-          Financial exclusion is one of the biggest barriers to progress in the Pacific.
-        </motion.p>
-        <motion.p 
           className="text-lg md:text-xl mb-8 max-w-3xl mx-auto text-gray-300"
           variants={fadeInUp}
         >
-          Across the Pacific, millions are locked out of the financial world. This isn't just a statistic — it's a lived reality.
+          Financial exclusion is one of the biggest barriers to progress in the Pacific.
         </motion.p>
 
         {/* Stats Grid */}
@@ -612,8 +611,8 @@ export const ManiniPayLanding = () => {
           viewport={{ once: true, amount: 0.2 }}
         >
           {[
-            { stat: "30%", text: "of Fiji is unbanked" },
-            { stat: "80-85%", text: "PNG unbanked" },
+            { stat: "30%", text: "Fiji unbanked" },
+            { stat: "80–85%", text: "PNG unbanked" },
             { stat: "68%", text: "Vanuatu unbanked" },
             { stat: "75%", text: "Solomon Islands unbanked" },
             { stat: "40%", text: "Tonga unbanked" },
@@ -624,20 +623,32 @@ export const ManiniPayLanding = () => {
           ].map((item, index) => (
             <motion.div 
               key={index}
-              className="bg-gray-900/80 backdrop-blur-sm border border-green-500/30 p-6 rounded-xl hover:border-green-500/60 transition-all"
+              className="p-6 rounded-2xl transition-all duration-300 relative overflow-hidden group"
+              style={{
+                background: "linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(10, 20, 40, 0.9) 100%)",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(74, 222, 128, 0.2)",
+                boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)",
+              }}
               variants={staggerItem}
-              whileHover={{ scale: 1.05, borderColor: "rgba(10, 141, 94, 0.8)", transition: { duration: 0.2 } }}
+              whileHover={{ 
+                scale: 1.05, 
+                y: -5,
+                borderColor: "rgba(74, 222, 128, 0.6)",
+                boxShadow: "0 20px 40px -10px rgba(74, 222, 128, 0.4)",
+                transition: { duration: 0.3 } 
+              }}
             >
-              <p className="text-2xl font-bold mb-2 text-green-400">{item.stat}</p>
-              <p className="text-lg text-gray-300">{item.text}</p>
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-emerald-500/0 to-emerald-500/0 group-hover:from-emerald-500/10 group-hover:via-emerald-500/5 group-hover:to-emerald-500/0 transition-all duration-300"></div>
+              <p className="text-3xl font-extrabold mb-2 relative z-10" style={{
+                background: "linear-gradient(135deg, #4ade80 0%, #10b981 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}>{item.stat}</p>
+              <p className="text-lg text-gray-300 relative z-10">{item.text}</p>
             </motion.div>
           ))}
-          <motion.div 
-            className="bg-gray-900/80 backdrop-blur-sm border border-green-500/30 p-6 rounded-xl md:col-span-3 hover:border-green-500/60 transition-all"
-            variants={staggerItem}
-          >
-            <p className="text-lg">• Rural communities travel hours just to access money</p>
-          </motion.div>
         </motion.div>
 
         <motion.p 
@@ -656,56 +667,16 @@ export const ManiniPayLanding = () => {
         <hr className="border-white opacity-40 my-8 w-3/4 mx-auto" />
       </motion.section>
 
-      {/* FOUNDER STORY SECTION */}
-      <motion.section 
-        ref={storyRef} 
-        className="px-6 md:px-20 py-16 text-center bg-black bg-opacity-60 backdrop-blur-sm rounded-2xl mx-4 md:mx-10 my-10 border border-green-500/20 shadow-2xl shadow-green-500/10 relative overflow-hidden"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeInUp}
-      >
-        <SparkleBackground intensity="medium" sectionId="story" />
-        <motion.h2 
-          className="text-3xl md:text-4xl font-bold mb-6 text-white"
-          variants={fadeInUp}
-        >
-          Born from a Promise
-        </motion.h2>
-        <motion.p 
-          className="text-xl mb-6 font-semibold text-green-400"
-          variants={fadeInUp}
-        >
-          This isn't a fintech story. It's a family story.
-        </motion.p>
-        
-        <motion.div 
-          className="max-w-4xl mx-auto text-left bg-gray-900/90 backdrop-blur-sm border border-green-500/30 p-8 rounded-xl"
-          variants={fadeInUp}
-          whileHover={{ scale: 1.02, borderColor: "rgba(10, 141, 94, 0.6)", transition: { duration: 0.3 } }}
-        >
-          <p className="text-lg md:text-xl leading-relaxed italic">
-            "When I was five, my mother and I travelled by canoe just to receive money. The village town officer had to verify people one by one and sign for those who didn't have one. Years later, we stood in line for hours in the heat — only to be turned away because she forgot one digit in a reference number. That day, I promised myself I would build something better. Manini Pay is that promise — a wallet built so no one is left behind again."
-          </p>
-        </motion.div>
-
-        <motion.button
-          onClick={() => setShowVideo(true)}
-          className="mt-6 bg-white text-green-900 px-6 py-3 rounded-full font-semibold hover:bg-green-100 transition"
-          variants={fadeInUp}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Watch the Story
-        </motion.button>
-
-        <hr className="border-white opacity-40 my-8 w-3/4 mx-auto" />
-      </motion.section>
-
       {/* WHAT IS MANINI PAY SECTION / SOLUTION SECTION */}
       <motion.section 
         ref={solutionRef} 
-        className="px-6 md:px-20 py-16 text-center bg-black bg-opacity-60 backdrop-blur-sm rounded-2xl mx-4 md:mx-10 my-10 border border-green-500/20 shadow-2xl shadow-green-500/10 relative overflow-hidden"
+        className="px-6 md:px-20 py-16 text-center rounded-3xl mx-4 md:mx-10 my-10 relative overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(10, 20, 40, 0.8) 100%)",
+          backdropFilter: "blur(20px)",
+          border: "1px solid rgba(74, 222, 128, 0.2)",
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(74, 222, 128, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+        }}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -752,12 +723,25 @@ export const ManiniPayLanding = () => {
           ].map((feature, index) => (
             <motion.div 
               key={index}
-              className="bg-gray-900/80 backdrop-blur-sm border border-green-500/30 p-6 rounded-xl hover:border-green-500/60 transition-all"
+              className="p-6 rounded-2xl transition-all duration-300 relative overflow-hidden group"
+              style={{
+                background: "linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(10, 20, 40, 0.9) 100%)",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(74, 222, 128, 0.2)",
+                boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)",
+              }}
               variants={staggerItem}
-              whileHover={{ scale: 1.05, y: -5, borderColor: "rgba(10, 141, 94, 0.8)", transition: { duration: 0.2 } }}
+              whileHover={{ 
+                scale: 1.05, 
+                y: -5,
+                borderColor: "rgba(74, 222, 128, 0.6)",
+                boxShadow: "0 20px 40px -10px rgba(74, 222, 128, 0.4)",
+                transition: { duration: 0.3 } 
+              }}
             >
-              <div className="text-4xl mb-3">{feature.icon}</div>
-              <h3 className="font-bold text-lg mb-2 text-gray-200">{feature.text}</h3>
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-emerald-500/0 to-emerald-500/0 group-hover:from-emerald-500/10 group-hover:via-emerald-500/5 group-hover:to-emerald-500/0 transition-all duration-300"></div>
+              <div className="text-5xl mb-3 relative z-10 filter drop-shadow-lg">{feature.icon}</div>
+              <h3 className="font-bold text-lg mb-2 text-gray-200 relative z-10">{feature.text}</h3>
             </motion.div>
           ))}
         </motion.div>
@@ -786,78 +770,35 @@ export const ManiniPayLanding = () => {
         </motion.div>
 
         <motion.button
-    onClick={() => scrollToSection(contactRef)}
-          className="bg-yellow-400 text-green-900 px-6 py-3 rounded-full font-semibold hover:bg-yellow-300 transition"
+          onClick={() => scrollToSection(contactRef)}
+          className="px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg relative overflow-hidden group"
+          style={{
+            background: "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)",
+            color: "#065f46",
+          }}
           variants={fadeInUp}
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ 
+            scale: 1.05,
+            boxShadow: "0 15px 30px -5px rgba(251, 191, 36, 0.5)",
+          }}
           whileTap={{ scale: 0.95 }}
         >
-          Get Early Access
+          <span className="relative z-10">Get Early Access</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
         </motion.button>
-
-        <hr className="border-white opacity-40 my-8 w-3/4 mx-auto" />
-      </motion.section>
-
-      {/* BUILT FOR THE PACIFIC SECTION */}
-      <motion.section 
-        className="px-6 md:px-20 py-16 text-center bg-black bg-opacity-60 backdrop-blur-sm rounded-2xl mx-4 md:mx-10 my-10 border border-green-500/20 shadow-2xl shadow-green-500/10 relative overflow-hidden"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeInUp}
-      >
-        <SparkleBackground intensity="medium" sectionId="pacific" />
-        <motion.h2 
-          className="text-3xl md:text-4xl font-bold mb-6 text-white"
-          variants={fadeInUp}
-        >
-          🌺 Built for the Pacific
-        </motion.h2>
-        <motion.p 
-          className="text-xl mb-8 italic text-gray-300"
-          variants={fadeInUp}
-        >
-          A wallet shaped by our culture, our challenges, and our future.
-        </motion.p>
-
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto mb-6"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          {[
-            "✓ Works on any phone",
-            "✓ Offline QR payments",
-            "✓ Simple onboarding",
-            "✓ Designed for women and rural communities",
-            "✓ Built for families across islands and borders",
-          ].map((item, index) => (
-            <motion.div 
-              key={index}
-              className="bg-gray-900/80 backdrop-blur-sm border border-green-500/30 p-6 rounded-xl text-left hover:border-green-500/60 transition-all"
-              variants={staggerItem}
-              whileHover={{ scale: 1.05, x: 5, borderColor: "rgba(10, 141, 94, 0.8)", transition: { duration: 0.2 } }}
-            >
-              <p className="text-lg text-gray-300">{item}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        <motion.p 
-          className="text-xl font-semibold mt-6 text-green-400"
-          variants={fadeInUp}
-        >
-          This is not just an app. It's a movement.
-        </motion.p>
 
         <hr className="border-white opacity-40 my-8 w-3/4 mx-auto" />
       </motion.section>
 
       {/* HOW WE SOLVE IT SECTION - "Designed for Inclusion. Built for Trust." */}
       <motion.section 
-        className="px-6 md:px-20 py-16 bg-black bg-opacity-60 backdrop-blur-sm rounded-2xl mx-4 md:mx-10 my-10 border border-green-500/20 shadow-2xl shadow-green-500/10 relative overflow-hidden"
+        className="px-6 md:px-20 py-16 rounded-3xl mx-4 md:mx-10 my-10 relative overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(10, 20, 40, 0.8) 100%)",
+          backdropFilter: "blur(20px)",
+          border: "1px solid rgba(74, 222, 128, 0.2)",
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(74, 222, 128, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+        }}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -895,12 +836,30 @@ export const ManiniPayLanding = () => {
           ].map((item, index) => (
             <motion.div 
               key={index}
-              className="bg-gray-900/80 backdrop-blur-sm border border-green-500/30 p-6 rounded-xl hover:border-green-500/60 transition-all"
+              className="p-6 rounded-2xl transition-all duration-300 relative overflow-hidden group"
+              style={{
+                background: "linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(10, 20, 40, 0.9) 100%)",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(74, 222, 128, 0.2)",
+                boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)",
+              }}
               variants={staggerItem}
-              whileHover={{ scale: 1.05, y: -5, borderColor: "rgba(10, 141, 94, 0.8)", transition: { duration: 0.2 } }}
+              whileHover={{ 
+                scale: 1.05, 
+                y: -5,
+                borderColor: "rgba(74, 222, 128, 0.6)",
+                boxShadow: "0 20px 40px -10px rgba(74, 222, 128, 0.4)",
+                transition: { duration: 0.3 } 
+              }}
             >
-              <p className="text-lg font-semibold mb-2 text-green-400">{item.problem}</p>
-              <p className="text-base text-gray-300">→ {item.solution}</p>
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-emerald-500/0 to-emerald-500/0 group-hover:from-emerald-500/10 group-hover:via-emerald-500/5 group-hover:to-emerald-500/0 transition-all duration-300"></div>
+              <p className="text-lg font-semibold mb-2 relative z-10" style={{
+                background: "linear-gradient(135deg, #4ade80 0%, #10b981 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}>{item.problem}</p>
+              <p className="text-base text-gray-300 relative z-10">→ {item.solution}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -916,60 +875,15 @@ export const ManiniPayLanding = () => {
         <hr className="border-white opacity-40 my-8 w-3/4 mx-auto" />
       </motion.section>
 
-      {/* COMPLIANCE & TRUST SECTION */}
-      <motion.section 
-        className="px-6 md:px-20 py-16 text-center bg-black bg-opacity-60 backdrop-blur-sm rounded-2xl mx-4 md:mx-10 my-10 border border-green-500/20 shadow-2xl shadow-green-500/10 relative overflow-hidden"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeInUp}
-      >
-        <SparkleBackground intensity="medium" sectionId="compliance" />
-        <motion.h2 
-          className="text-3xl md:text-4xl font-bold mb-6 text-white"
-          variants={fadeInUp}
-        >
-          🌊 Compliance & Trust
-        </motion.h2>
-        <motion.p 
-          className="text-xl mb-8 font-semibold text-gray-300"
-          variants={fadeInUp}
-        >
-          Safe. Secure. Regulator aligned.
-        </motion.p>
-
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-5xl mx-auto mb-6"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          {["KYC/AML", "Encryption", "Audit logs", "Real time fraud detection", "Sandbox ready"].map((item, index) => (
-            <motion.div 
-              key={index}
-              className="bg-gray-900/80 backdrop-blur-sm border border-green-500/30 p-6 rounded-xl hover:border-green-500/60 transition-all"
-              variants={staggerItem}
-              whileHover={{ scale: 1.1, rotate: 2, borderColor: "rgba(10, 141, 94, 0.8)", transition: { duration: 0.2 } }}
-            >
-              <p className="text-lg font-semibold text-gray-200">{item}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        <motion.p 
-          className="text-lg font-semibold mt-4 text-gray-200"
-          variants={fadeInUp}
-        >
-          We work with regulators — not around them.
-        </motion.p>
-
-        <hr className="border-white opacity-40 my-8 w-3/4 mx-auto" />
-      </motion.section>
-
       {/* WHY NOW SECTION */}
       <motion.section 
-        className="px-6 md:px-20 py-16 text-center bg-black bg-opacity-60 backdrop-blur-sm rounded-2xl mx-4 md:mx-10 my-10 border border-green-500/20 shadow-2xl shadow-green-500/10 relative overflow-hidden"
+        className="px-6 md:px-20 py-16 text-center rounded-3xl mx-4 md:mx-10 my-10 relative overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(10, 20, 40, 0.8) 100%)",
+          backdropFilter: "blur(20px)",
+          border: "1px solid rgba(74, 222, 128, 0.2)",
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(74, 222, 128, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+        }}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -999,9 +913,9 @@ export const ManiniPayLanding = () => {
           {[
             "• Smartphone adoption rising",
             "• Government inclusion initiatives",
-            "• Youth driven digital economy",
-            "• Remittance pain at all time high",
-            "• Demand for real time payments",
+            "• Youth‑driven digital economy",
+            "• Remittance pain is at an all‑time high",
+            "• Demand for real-time payments",
           ].map((item, index) => (
             <motion.div 
               key={index}
@@ -1022,21 +936,35 @@ export const ManiniPayLanding = () => {
         </motion.p>
 
         <motion.button
-            onClick={() => scrollToSection(contactRef)}
-          className="mt-6 bg-yellow-400 text-green-900 px-6 py-3 rounded-full font-semibold hover:bg-yellow-300 transition"
+          onClick={() => scrollToSection(contactRef)}
+          className="mt-6 px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg relative overflow-hidden group"
+          style={{
+            background: "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)",
+            color: "#065f46",
+          }}
           variants={fadeInUp}
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ 
+            scale: 1.05,
+            boxShadow: "0 15px 30px -5px rgba(251, 191, 36, 0.5)",
+          }}
           whileTap={{ scale: 0.95 }}
         >
-          Explore why timing matters
+          <span className="relative z-10">Explore why timing matters</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
         </motion.button>
 
         <hr className="border-white opacity-40 my-8 w-3/4 mx-auto" />
       </motion.section>
 
-      {/* SOCIAL PROOF SECTION - "Recognized for Impact" */}
+      {/* SOCIAL PROOF SECTION - "TRACTION & MOMENTUM" */}
       <motion.section 
-        className="px-6 md:px-20 py-16 text-center bg-black bg-opacity-60 backdrop-blur-sm rounded-2xl mx-4 md:mx-10 my-10 border border-green-500/20 shadow-2xl shadow-green-500/10 relative overflow-hidden"
+        className="px-6 md:px-20 py-16 text-center rounded-3xl mx-4 md:mx-10 my-10 relative overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(10, 20, 40, 0.8) 100%)",
+          backdropFilter: "blur(20px)",
+          border: "1px solid rgba(74, 222, 128, 0.2)",
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(74, 222, 128, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+        }}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -1047,7 +975,7 @@ export const ManiniPayLanding = () => {
           className="text-3xl md:text-4xl font-bold mb-6 text-white"
           variants={fadeInUp}
         >
-          Recognized for Impact
+          🌺 TRACTION & MOMENTUM
         </motion.h2>
         <motion.p 
           className="text-xl mb-8 text-gray-300"
@@ -1064,13 +992,30 @@ export const ManiniPayLanding = () => {
           viewport={{ once: true, amount: 0.2 }}
         >
           <motion.div 
-            className="bg-gray-900/90 backdrop-blur-sm border border-green-500/40 p-8 rounded-xl mb-6"
+            className="p-8 rounded-2xl mb-6 relative overflow-hidden group"
+            style={{
+              background: "linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(10, 20, 40, 0.98) 100%)",
+              backdropFilter: "blur(15px)",
+              border: "1px solid rgba(74, 222, 128, 0.4)",
+              boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+            }}
             variants={staggerItem}
-            whileHover={{ scale: 1.02, borderColor: "rgba(10, 141, 94, 0.8)", transition: { duration: 0.3 } }}
+            whileHover={{ 
+              scale: 1.02, 
+              borderColor: "rgba(74, 222, 128, 0.8)",
+              boxShadow: "0 25px 50px -12px rgba(74, 222, 128, 0.3)",
+              transition: { duration: 0.3 } 
+            }}
           >
-            <h3 className="text-2xl font-bold mb-4 text-green-400">Top 5 Fintech Startups</h3>
-            <p className="text-xl text-gray-200">Pacific Fintech Sandbox Accelerator (2026)</p>
-            <p className="text-lg mt-4 italic text-gray-400">Innovation with purpose — recognised across the region.</p>
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent opacity-50"></div>
+            <h3 className="text-2xl font-bold mb-4 relative z-10" style={{
+              background: "linear-gradient(135deg, #4ade80 0%, #10b981 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}>Top 5 Fintech Startups</h3>
+            <p className="text-xl text-gray-200 relative z-10">Pacific Fintech Sandbox Accelerator (2026)</p>
+            <p className="text-lg mt-4 italic text-gray-400 relative z-10">Innovation with purpose — recognised across the region.</p>
           </motion.div>
 
           <motion.div 
@@ -1078,17 +1023,30 @@ export const ManiniPayLanding = () => {
             variants={staggerContainer}
           >
             {[
-              { items: ["✓ Landing page live", "✓ Early users joining the waitlist", "✓ MVP in testing"] },
-              { items: ["✓ Pilot launch in March", "✓ Official launch October 2026"] },
+              { items: ["✓ Landing page live", "✓ Early users joining the waitlist", "✓ MVP in testing", "✓ Pilot launch in March"] },
+              { items: ["✓ June-September 2026: Pilot Launch", "✓ Official launch October 2026", "✓ Selected as a Top 5 Fintech Startup for the Pacific Sandbox Accelerator"] },
             ].map((group, index) => (
               <motion.div 
                 key={index}
-                className="bg-gray-900/80 backdrop-blur-sm border border-green-500/30 p-6 rounded-xl hover:border-green-500/60 transition-all"
+                className="p-6 rounded-2xl transition-all duration-300 relative overflow-hidden group"
+                style={{
+                  background: "linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(10, 20, 40, 0.9) 100%)",
+                  backdropFilter: "blur(10px)",
+                  border: "1px solid rgba(74, 222, 128, 0.2)",
+                  boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)",
+                }}
                 variants={staggerItem}
-                whileHover={{ scale: 1.05, x: 5, borderColor: "rgba(10, 141, 94, 0.8)", transition: { duration: 0.2 } }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  x: 5,
+                  borderColor: "rgba(74, 222, 128, 0.6)",
+                  boxShadow: "0 20px 40px -10px rgba(74, 222, 128, 0.4)",
+                  transition: { duration: 0.3 } 
+                }}
               >
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-emerald-500/0 to-emerald-500/0 group-hover:from-emerald-500/10 group-hover:via-emerald-500/5 group-hover:to-emerald-500/0 transition-all duration-300"></div>
                 {group.items.map((item, i) => (
-                  <p key={i} className="text-lg text-gray-300">{item}</p>
+                  <p key={i} className="text-lg text-gray-300 relative z-10">{item}</p>
                 ))}
               </motion.div>
             ))}
@@ -1104,12 +1062,92 @@ export const ManiniPayLanding = () => {
 
         <motion.button
           onClick={() => scrollToSection(contactRef)}
-          className="mt-6 bg-white text-green-900 px-6 py-3 rounded-full font-semibold hover:bg-green-100 transition"
+          className="mt-6 px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg relative overflow-hidden group"
+          style={{
+            background: "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 250, 0.95) 100%)",
+            color: "#065f46",
+          }}
           variants={fadeInUp}
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ 
+            scale: 1.05,
+            boxShadow: "0 15px 30px -5px rgba(74, 222, 128, 0.4)",
+          }}
           whileTap={{ scale: 0.95 }}
         >
-          See our roadmap
+          <span className="relative z-10">See our roadmap</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+        </motion.button>
+
+        <hr className="border-white opacity-40 my-8 w-3/4 mx-auto" />
+      </motion.section>
+
+      {/* FOUNDER STORY SECTION */}
+      <motion.section 
+        ref={storyRef} 
+        className="px-6 md:px-20 py-16 text-center rounded-3xl mx-4 md:mx-10 my-10 relative overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(10, 20, 40, 0.8) 100%)",
+          backdropFilter: "blur(20px)",
+          border: "1px solid rgba(74, 222, 128, 0.2)",
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(74, 222, 128, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+        }}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={fadeInUp}
+      >
+        <SparkleBackground intensity="medium" sectionId="story" />
+        <motion.h2 
+          className="text-3xl md:text-4xl font-bold mb-6 text-white"
+          variants={fadeInUp}
+        >
+          Born from a Promise
+        </motion.h2>
+        <motion.p 
+          className="text-xl mb-6 font-semibold text-green-400"
+          variants={fadeInUp}
+        >
+          This isn't a fintech story. It's a family story.
+        </motion.p>
+        
+        <motion.div 
+          className="max-w-4xl mx-auto text-left p-8 rounded-2xl relative overflow-hidden"
+          style={{
+            background: "linear-gradient(135deg, rgba(17, 24, 39, 0.9) 0%, rgba(10, 20, 40, 0.95) 100%)",
+            backdropFilter: "blur(15px)",
+            border: "1px solid rgba(74, 222, 128, 0.3)",
+            boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+          }}
+          variants={fadeInUp}
+          whileHover={{ 
+            scale: 1.02, 
+            borderColor: "rgba(74, 222, 128, 0.6)",
+            boxShadow: "0 25px 50px -12px rgba(74, 222, 128, 0.3)",
+            transition: { duration: 0.3 } 
+          }}
+        >
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent opacity-50"></div>
+          <p className="text-lg md:text-xl leading-relaxed italic text-gray-200 relative z-10">
+            "When I was five, my mother and I travelled by canoe just to receive money. The village town officer had to verify people one by one and sign for those who didn't have one. Years later, we stood in line for hours in the heat — only to be turned away because she forgot one digit in a reference number. That day, I promised myself I would build something better. Manini Pay is that promise — a wallet built so no one is left behind again."
+          </p>
+        </motion.div>
+
+        <motion.button
+          onClick={() => setShowVideo(true)}
+          className="mt-6 px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg relative overflow-hidden group"
+          style={{
+            background: "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 250, 0.95) 100%)",
+            color: "#065f46",
+          }}
+          variants={fadeInUp}
+          whileHover={{ 
+            scale: 1.05,
+            boxShadow: "0 15px 30px -5px rgba(74, 222, 128, 0.4)",
+          }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <span className="relative z-10">Watch the Story</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
         </motion.button>
 
         <hr className="border-white opacity-40 my-8 w-3/4 mx-auto" />
@@ -1117,7 +1155,13 @@ export const ManiniPayLanding = () => {
 
       {/* TIMELINE SECTION */}
       <motion.section 
-        className="px-6 md:px-20 py-16 text-left bg-black bg-opacity-60 backdrop-blur-sm rounded-2xl mx-4 md:mx-10 my-10 border border-green-500/20 shadow-2xl shadow-green-500/10 relative overflow-hidden"
+        className="px-6 md:px-20 py-16 text-left rounded-3xl mx-4 md:mx-10 my-10 relative overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(10, 20, 40, 0.8) 100%)",
+          backdropFilter: "blur(20px)",
+          border: "1px solid rgba(74, 222, 128, 0.2)",
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(74, 222, 128, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+        }}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -1150,11 +1194,29 @@ export const ManiniPayLanding = () => {
           ].map((item, index) => (
             <motion.li 
               key={index}
-              className="bg-gray-900/80 backdrop-blur-sm border border-green-500/30 p-4 rounded-xl hover:border-green-500/60 transition-all"
+              className="p-4 rounded-2xl transition-all duration-300 relative overflow-hidden group"
+              style={{
+                background: "linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(10, 20, 40, 0.9) 100%)",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(74, 222, 128, 0.2)",
+                boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)",
+              }}
               variants={staggerItem}
-              whileHover={{ scale: 1.03, x: 10, borderColor: "rgba(10, 141, 94, 0.8)", transition: { duration: 0.2 } }}
+              whileHover={{ 
+                scale: 1.03, 
+                x: 10,
+                borderColor: "rgba(74, 222, 128, 0.6)",
+                boxShadow: "0 20px 40px -10px rgba(74, 222, 128, 0.4)",
+                transition: { duration: 0.3 } 
+              }}
             >
-              ➤ <strong className="text-green-400">{item.date}:</strong> <span className="text-gray-300">{item.event}</span>
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-emerald-500/0 to-emerald-500/0 group-hover:from-emerald-500/10 group-hover:via-emerald-500/5 group-hover:to-emerald-500/0 transition-all duration-300"></div>
+              ➤ <strong className="relative z-10" style={{
+                background: "linear-gradient(135deg, #4ade80 0%, #10b981 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}>{item.date}:</strong> <span className="text-gray-300 relative z-10">{item.event}</span>
             </motion.li>
           ))}
         </motion.ul>
@@ -1171,11 +1233,19 @@ export const ManiniPayLanding = () => {
         >
           <motion.button
             onClick={() => scrollToSection(contactRef)}
-            className="bg-yellow-400 text-green-900 px-8 py-3 rounded-full font-bold hover:bg-yellow-300 transition"
-            whileHover={{ scale: 1.05 }}
+            className="px-8 py-3 rounded-full font-bold transition-all duration-300 shadow-lg relative overflow-hidden group"
+            style={{
+              background: "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)",
+              color: "#065f46",
+            }}
+            whileHover={{ 
+              scale: 1.05,
+              boxShadow: "0 15px 30px -5px rgba(251, 191, 36, 0.5)",
+            }}
             whileTap={{ scale: 0.95 }}
           >
-            Join the Pilot Group
+            <span className="relative z-10">Join the Pilot Group</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
           </motion.button>
         </motion.div>
         <hr className="border-white opacity-40 my-8 w-3/4 mx-auto" />
@@ -1197,22 +1267,10 @@ export const ManiniPayLanding = () => {
           Join the Movement
         </motion.h2>
         <motion.p 
-          className="text-xl md:text-2xl mb-4 italic text-gray-300"
+          className="text-xl md:text-2xl mb-8 italic text-gray-300"
           variants={fadeInUp}
         >
           Be part of the future of Pacific finance.
-        </motion.p>
-        <motion.p 
-          className="text-xl mb-8 font-semibold text-green-400"
-          variants={fadeInUp}
-        >
-          This is how money moves.
-        </motion.p>
-        <motion.p 
-          className="text-lg mb-8 text-gray-300"
-          variants={fadeInUp}
-        >
-          Sign up for early access. Help shape the future of Pacific finance.
         </motion.p>
         <motion.div 
           className="flex flex-col sm:flex-row gap-4 justify-center mb-8"
@@ -1223,21 +1281,39 @@ export const ManiniPayLanding = () => {
         >
           <motion.button
             onClick={() => scrollToSection(contactRef)}
-            className="bg-yellow-400 text-green-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-yellow-300 transition shadow-lg"
+            className="px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-xl relative overflow-hidden group"
+            style={{
+              background: "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)",
+              color: "#065f46",
+            }}
             variants={staggerItem}
-            whileHover={{ scale: 1.05, y: -3 }}
+            whileHover={{ 
+              scale: 1.05, 
+              y: -3,
+              boxShadow: "0 20px 40px -10px rgba(251, 191, 36, 0.5)",
+            }}
             whileTap={{ scale: 0.95 }}
           >
-            Join Early Access
+            <span className="relative z-10">Join Early Access</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
           </motion.button>
           <motion.button
-          onClick={() => scrollToSection(contactRef)}
-            className="bg-white text-green-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-green-100 transition shadow-lg"
+            onClick={() => scrollToSection(contactRef)}
+            className="px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-xl relative overflow-hidden group"
+            style={{
+              background: "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 250, 0.95) 100%)",
+              color: "#065f46",
+            }}
             variants={staggerItem}
-            whileHover={{ scale: 1.05, y: -3 }}
+            whileHover={{ 
+              scale: 1.05, 
+              y: -3,
+              boxShadow: "0 20px 40px -10px rgba(255, 255, 255, 0.3)",
+            }}
             whileTap={{ scale: 0.95 }}
           >
-            Become a Pilot Tester
+            <span className="relative z-10">Become a Pilot Tester</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-100/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
           </motion.button>
         </motion.div>
         <motion.p 
@@ -1256,36 +1332,6 @@ export const ManiniPayLanding = () => {
             type="button"
             className="hover:underline whitespace-nowrap bg-transparent border-none p-0 cursor-pointer"
             onClick={() => {
-              scrollToSection(howItWorksRef);
-            }}
-          >
-            How it Works
-          </button>
-          <span className="text-white">|</span>
-          <button
-            type="button"
-            className="hover:underline whitespace-nowrap bg-transparent border-none p-0 cursor-pointer"
-            onClick={() => {
-              scrollToSection(contactRef);
-            }}
-          >
-            Early Access
-          </button>
-          <span className="text-white">|</span>
-          <button
-            type="button"
-            className="hover:underline whitespace-nowrap bg-transparent border-none p-0 cursor-pointer"
-            onClick={() => {
-              setShowVideo(true);
-            }}
-          >
-            Official Video
-          </button>
-          <span className="text-white">|</span>
-          <button
-            type="button"
-            className="hover:underline whitespace-nowrap bg-transparent border-none p-0 cursor-pointer"
-            onClick={() => {
               scrollToSection(contactRef);
             }}
           >
@@ -1293,8 +1339,8 @@ export const ManiniPayLanding = () => {
           </button>
           <span className="text-white">|</span>
           <Link to="/privacy" className="hover:underline whitespace-nowrap">
-  Privacy
-</Link>
+            Privacy
+          </Link>
           <span className="text-white">|</span>
           <Link to="/terms" className="hover:underline whitespace-nowrap">
             Terms of Use
@@ -1312,11 +1358,6 @@ export const ManiniPayLanding = () => {
         </p>
       </footer>
 
-      {/* HOW IT WORKS SECTION */}
-      <div ref={howItWorksRef}>
-        <HowItWorks />
-      </div>
-      
       {/* CONTACT SECTION */}
       <div ref={contactRef}>
         <Contact />
