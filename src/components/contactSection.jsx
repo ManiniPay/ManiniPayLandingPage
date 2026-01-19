@@ -370,30 +370,253 @@ export default function ContactSection() {
     }
   };
 
+  // Professional Sparkle Background with Rays and Particles
+  const SparkleBackground = () => {
+    const sparkleCount = 30;
+    const rayCount = 6;
+    
+    return (
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Animated Rays/Beams */}
+        {Array.from({ length: rayCount }, (_, i) => {
+          const angle = (360 / rayCount) * i;
+          const delay = (i * 0.3) % 4;
+          return (
+            <div
+              key={`ray-contact-${i}`}
+              className="absolute"
+              style={{
+                left: '50%',
+                top: '50%',
+                width: '2px',
+                height: '150%',
+                background: `linear-gradient(to bottom, 
+                  transparent 0%, 
+                  rgba(74, 222, 128, 0.1) 20%,
+                  rgba(34, 197, 94, 0.3) 50%,
+                  rgba(74, 222, 128, 0.1) 80%,
+                  transparent 100%)`,
+                transform: `translate(-50%, -50%) rotate(${angle}deg)`,
+                transformOrigin: 'center',
+                animation: `ray-rotate 20s linear infinite`,
+                animationDelay: `${delay}s`,
+                boxShadow: '0 0 20px rgba(74, 222, 128, 0.5)',
+              }}
+            />
+          );
+        })}
+
+        {/* Sparkle Particles */}
+        {Array.from({ length: sparkleCount }, (_, i) => {
+          const size = 2 + (i % 3);
+          const left = (i * 23.7) % 100;
+          const top = (i * 31.3) % 100;
+          const delay = (i * 0.15) % 3;
+          const duration = 3 + (i % 4);
+          const opacity = 0.6 + (i % 3) * 0.15;
+          return (
+            <div
+              key={`sparkle-contact-${i}`}
+              className="absolute rounded-full"
+              style={{
+                width: `${size}px`,
+                height: `${size}px`,
+                left: `${left}%`,
+                top: `${top}%`,
+                backgroundColor: `rgba(74, 222, 128, ${opacity})`,
+                boxShadow: `
+                  0 0 ${size * 2}px rgba(74, 222, 128, 0.8),
+                  0 0 ${size * 4}px rgba(34, 197, 94, 0.6),
+                  0 0 ${size * 6}px rgba(16, 185, 129, 0.4)
+                `,
+                animation: `sparkle-twinkle ${duration}s ease-in-out infinite`,
+                animationDelay: `${delay}s`,
+              }}
+            />
+          );
+        })}
+
+        {/* Moving Particles */}
+        {Array.from({ length: Math.floor(sparkleCount * 0.6) }, (_, i) => {
+          const size = 1 + (i % 2);
+          const left = (i * 37.1) % 100;
+          const duration = 8 + (i % 6);
+          const delay = (i * 0.2) % 5;
+          const animType = i % 3 === 0 ? 'particle-float' : i % 3 === 1 ? 'particle-float-left' : 'particle-float-right';
+          return (
+            <div
+              key={`particle-contact-${i}`}
+              className="absolute rounded-full"
+              style={{
+                width: `${size}px`,
+                height: `${size}px`,
+                left: `${left}%`,
+                backgroundColor: `rgba(34, 197, 94, ${0.7 + (i % 2) * 0.2})`,
+                boxShadow: `
+                  0 0 ${size * 3}px rgba(74, 222, 128, 0.9),
+                  0 0 ${size * 6}px rgba(34, 197, 94, 0.7)
+                `,
+                animation: `${animType} ${duration}s linear infinite`,
+                animationDelay: `${delay}s`,
+              }}
+            />
+          );
+        })}
+
+        {/* Glowing Orbs */}
+        {Array.from({ length: Math.floor(sparkleCount * 0.2) }, (_, i) => {
+          const size = 4 + (i % 3);
+          const left = (i * 47.3) % 100;
+          const top = (i * 53.7) % 100;
+          const duration = 12 + (i % 8);
+          const delay = (i * 0.4) % 6;
+          return (
+            <div
+              key={`orb-contact-${i}`}
+              className="absolute rounded-full"
+              style={{
+                width: `${size}px`,
+                height: `${size}px`,
+                left: `${left}%`,
+                top: `${top}%`,
+                backgroundColor: `rgba(16, 185, 129, 0.4)`,
+                boxShadow: `
+                  0 0 ${size * 4}px rgba(74, 222, 128, 0.8),
+                  0 0 ${size * 8}px rgba(34, 197, 94, 0.6),
+                  0 0 ${size * 12}px rgba(16, 185, 129, 0.4)
+                `,
+                animation: `orb-pulse ${duration}s ease-in-out infinite`,
+                animationDelay: `${delay}s`,
+              }}
+            />
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
     <section
       id="contact"
-      className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-gray-50 to-white"
+      className="py-12 sm:py-16 lg:py-20 text-white relative overflow-hidden"
+      style={{
+        background: `radial-gradient(ellipse at top, #0a0a0a 0%, #000000 50%, #0a1628 100%)`,
+      }}
     >
+      {/* Sparkle Background */}
+      <SparkleBackground />
+      
+      {/* Sparkle Animation CSS */}
+      <style>{`
+        @keyframes ray-rotate {
+          0% {
+            transform: translate(-50%, -50%) rotate(0deg);
+            opacity: 0.3;
+          }
+          50% {
+            opacity: 0.6;
+          }
+          100% {
+            transform: translate(-50%, -50%) rotate(360deg);
+            opacity: 0.3;
+          }
+        }
+        @keyframes sparkle-twinkle {
+          0%, 100% {
+            opacity: 0.3;
+            transform: scale(0.8);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.2);
+          }
+        }
+        @keyframes particle-float {
+          0% {
+            transform: translateY(calc(100vh + 50px)) translateX(0) scale(0.5);
+            opacity: 0;
+          }
+          5% {
+            opacity: 0.8;
+          }
+          95% {
+            opacity: 0.8;
+          }
+          100% {
+            transform: translateY(-100px) translateX(30px) scale(1);
+            opacity: 0;
+          }
+        }
+        @keyframes particle-float-left {
+          0% {
+            transform: translateY(calc(100vh + 50px)) translateX(0) scale(0.5);
+            opacity: 0;
+          }
+          5% {
+            opacity: 0.8;
+          }
+          95% {
+            opacity: 0.8;
+          }
+          100% {
+            transform: translateY(-100px) translateX(-25px) scale(1);
+            opacity: 0;
+          }
+        }
+        @keyframes particle-float-right {
+          0% {
+            transform: translateY(calc(100vh + 50px)) translateX(0) scale(0.5);
+            opacity: 0;
+          }
+          5% {
+            opacity: 0.8;
+          }
+          95% {
+            opacity: 0.8;
+          }
+          100% {
+            transform: translateY(-100px) translateX(40px) scale(1);
+            opacity: 0;
+          }
+        }
+        @keyframes orb-pulse {
+          0%, 100% {
+            opacity: 0.3;
+            transform: scale(0.8);
+          }
+          50% {
+            opacity: 0.7;
+            transform: scale(1.3);
+          }
+        }
+      `}</style>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
           {/* Contact / Signup Form */}
-          <div className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 relative overflow-hidden shadow-lg border border-gray-200">
+          <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-6 sm:p-8 relative overflow-hidden shadow-lg border"
+            style={{ borderColor: "rgba(45, 122, 68, 0.6)" }}
+          >
             <div className="absolute inset-0 opacity-5">
-              <div className="absolute top-0 right-0 w-24 sm:w-32 h-24 sm:h-32 bg-gradient-to-br from-green-500 to-transparent rounded-full blur-3xl"></div>
-              <div className="absolute bottom-0 left-0 w-20 sm:w-24 h-20 sm:h-24 bg-gradient-to-tr from-green-400 to-transparent rounded-full blur-2xl"></div>
+              <div className="absolute top-0 right-0 w-24 sm:w-32 h-24 sm:h-32 rounded-full blur-3xl"
+                style={{ background: "radial-gradient(circle at top, rgba(45,122,68,0.85), transparent 60%)" }}
+              ></div>
+              <div className="absolute bottom-0 left-0 w-20 sm:w-24 h-20 sm:h-24 rounded-full blur-2xl"
+                style={{ background: "radial-gradient(circle at bottom, rgba(45,122,68,0.6), transparent 60%)" }}
+              ></div>
             </div>
 
             <div className="relative z-10">
               <div className="text-center mb-6 sm:mb-8">
-                <div className="inline-flex items-center justify-center w-12 sm:w-16 h-12 sm:h-16 bg-gradient-to-r from-green-600 to-green-500 rounded-xl sm:rounded-2xl mb-4">
+                <div className="inline-flex items-center justify-center w-12 sm:w-16 h-12 sm:h-16 rounded-xl sm:rounded-2xl mb-4"
+                  style={{ background: "linear-gradient(135deg, #2D7A44, #183f24)" }}
+                >
                   <Rocket className="w-6 sm:w-8 h-6 sm:h-8 text-white" />
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-bold mb-2 text-gray-900">
+                <h3 className="text-2xl sm:text-3xl font-bold mb-2 text-white">
                   Join the Movement
                 </h3>
-                <p className="text-gray-600 text-base sm:text-lg">
+                <p className="text-gray-300 text-base sm:text-lg">
                   Join our community and help shape the future of financial access
                 </p>
               </div>
@@ -403,9 +626,11 @@ export default function ContactSection() {
                   <div className="space-y-2">
                     <Label
                       htmlFor="firstName"
-                      className="text-sm font-semibold text-gray-700 flex items-center space-x-2"
+                      className="text-sm font-semibold text-gray-300 flex items-center space-x-2"
                     >
-                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                      <span className="w-2 h-2 rounded-full"
+                        style={{ backgroundColor: "#2D7A44" }}
+                      ></span>
                       <span>First Name *</span>
                     </Label>
                     <Input
@@ -420,16 +645,19 @@ export default function ContactSection() {
                         }))
                       }
                       required
-                      className="h-10 sm:h-12 bg-gray-50 border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 rounded-lg sm:rounded-xl transition-all duration-300 placeholder:text-gray-400 text-gray-900 hover:bg-gray-100 focus:bg-white"
+                      className="h-10 sm:h-12 bg-gray-800/50 border-gray-700 rounded-lg sm:rounded-xl transition-all duration-300 placeholder:text-gray-500 text-white hover:bg-gray-800/70 focus:bg-gray-800/80 focus:ring-2"
+                      style={{ outline: "none", boxShadow: "0 0 0 1px transparent" }}
                     />
                   </div>
 
                   <div className="space-y-2">
                     <Label
                       htmlFor="lastName"
-                      className="text-sm font-semibold text-gray-700 flex items-center space-x-2"
+                      className="text-sm font-semibold text-gray-300 flex items-center space-x-2"
                     >
-                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                      <span className="w-2 h-2 rounded-full"
+                        style={{ backgroundColor: "#2D7A44" }}
+                      ></span>
                       <span>Last Name *</span>
                     </Label>
                     <Input
@@ -444,7 +672,8 @@ export default function ContactSection() {
                         }))
                       }
                       required
-                      className="h-10 sm:h-12 bg-gray-50 border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 rounded-lg sm:rounded-xl transition-all duration-300 placeholder:text-gray-400 text-gray-900 hover:bg-gray-100 focus:bg-white"
+                      className="h-10 sm:h-12 bg-gray-800/50 border-gray-700 rounded-lg sm:rounded-xl transition-all duration-300 placeholder:text-gray-500 text-white hover:bg-gray-800/70 focus:bg-gray-800/80 focus:ring-2"
+                      style={{ outline: "none", boxShadow: "0 0 0 1px transparent" }}
                     />
                   </div>
                 </div>
@@ -453,9 +682,11 @@ export default function ContactSection() {
                   <div className="space-y-2">
                     <Label
                       htmlFor="email"
-                      className="text-sm font-semibold text-gray-700 flex items-center space-x-2"
+                      className="text-sm font-semibold text-gray-300 flex items-center space-x-2"
                     >
-                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                      <span className="w-2 h-2 rounded-full"
+                        style={{ backgroundColor: "#2D7A44" }}
+                      ></span>
                       <span>Email Address *</span>
                     </Label>
                     <Input
@@ -470,16 +701,19 @@ export default function ContactSection() {
                         }))
                       }
                       required
-                      className="h-10 sm:h-12 bg-gray-50 border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 rounded-lg sm:rounded-xl transition-all duration-300 placeholder:text-gray-400 text-gray-900 hover:bg-gray-100 focus:bg-white"
+                      className="h-10 sm:h-12 bg-gray-800/50 border-gray-700 rounded-lg sm:rounded-xl transition-all duration-300 placeholder:text-gray-500 text-white hover:bg-gray-800/70 focus:bg-gray-800/80 focus:ring-2"
+                      style={{ outline: "none", boxShadow: "0 0 0 1px transparent" }}
                     />
                   </div>
 
                   <div className="space-y-2">
                     <Label
                       htmlFor="phone"
-                      className="text-sm font-semibold text-gray-700 flex items-center space-x-2"
+                      className="text-sm font-semibold text-gray-300 flex items-center space-x-2"
                     >
-                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                      <span className="w-2 h-2 rounded-full"
+                        style={{ backgroundColor: "#2D7A44" }}
+                      ></span>
                       <span>Phone Number *</span>
                     </Label>
                     <Input
@@ -494,16 +728,16 @@ export default function ContactSection() {
                         }))
                       }
                       required
-                      className="h-10 sm:h-12 bg-gray-50 border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 rounded-lg sm:rounded-xl transition-all duration-300 placeholder:text-gray-400 text-gray-900 hover:bg-gray-100 focus:bg-white"
+                      className="h-10 sm:h-12 bg-gray-800/50 border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 rounded-lg sm:rounded-xl transition-all duration-300 placeholder:text-gray-500 text-white hover:bg-gray-800/70 focus:bg-gray-800/80"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label
-                    htmlFor="password"
-                    className="text-sm font-semibold text-gray-700 flex items-center space-x-2"
-                  >
+                    <Label
+                      htmlFor="password"
+                      className="text-sm font-semibold text-gray-300 flex items-center space-x-2"
+                    >
                     <span className="w-2 h-2 bg-green-500 rounded-full"></span>
                     <span>Password *</span>
                   </Label>
@@ -519,7 +753,8 @@ export default function ContactSection() {
                       }))
                     }
                     required
-                    className="bg-gray-50 border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 rounded-lg sm:rounded-xl transition-all duration-300 placeholder:text-gray-400 text-gray-900 hover:bg-gray-100 focus:bg-white"
+                    className="bg-gray-800/50 border-gray-700 rounded-lg sm:rounded-xl transition-all duration-300 placeholder:text-gray-500 text-white hover:bg-gray-800/70 focus:bg-gray-800/80 focus:ring-2"
+                    style={{ outline: "none", boxShadow: "0 0 0 1px transparent" }}
                   />
                 </div>
 
@@ -527,7 +762,11 @@ export default function ContactSection() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full h-12 sm:h-14 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white rounded-lg sm:rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-[1.02] shadow-lg hover:shadow-green-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full h-12 sm:h-14 text-white rounded-lg sm:rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-[1.02] shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    style={{
+                      background: "linear-gradient(135deg, #2D7A44, #183f24)",
+                      boxShadow: "0 0 25px rgba(45,122,68,0.55)",
+                    }}
                   >
                     {isSubmitting ? (
                       <>
@@ -543,12 +782,19 @@ export default function ContactSection() {
                   </Button>
                 </div>
 
-                <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 rounded-lg sm:rounded-xl border border-green-200">
+                <div className="mt-4 sm:mt-6 p-3 sm:p-4 rounded-lg sm:rounded-xl border"
+                  style={{
+                    backgroundColor: "rgba(13, 37, 23, 0.9)",
+                    borderColor: "rgba(45,122,68,0.6)",
+                  }}
+                >
                   <div className="flex items-start space-x-3">
-                    <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                      style={{ backgroundColor: "#2D7A44" }}
+                    >
                       <CheckCircle className="w-3 h-3 text-white" />
                     </div>
-                    <p className="text-sm text-gray-700 leading-relaxed">
+                    <p className="text-sm text-gray-300 leading-relaxed">
                       Your privacy is our priority—we never share your data without your consent. Join thousands of others shaping the future of financial access.
                     </p>
                   </div>
@@ -559,13 +805,13 @@ export default function ContactSection() {
 
           {/* Contact Info & CTAs */}
           <div className="space-y-6 sm:space-y-8">
-            <div className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-200">
-              <h4 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-gray-900">
+            <div className="bg-gray-900/80 backdrop-blur-sm border border-green-500/30 rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg">
+              <h4 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-white">
                 Contact Us
               </h4>
-              <div className="space-y-4 text-gray-700">
+              <div className="space-y-4 text-gray-300">
   {/* Address 1 */}
-  <h5 className="text-sm sm:text-base font-semibold text-gray-900">Address 1</h5>
+  <h5 className="text-sm sm:text-base font-semibold text-white">Address 1</h5>
   <div className="space-y-3">
     <div className="flex items-center space-x-3">
       <MapPin className="w-5 h-5 text-green-500 flex-shrink-0" />
@@ -577,7 +823,7 @@ export default function ContactSection() {
       <Mail className="w-5 h-5 text-green-500 flex-shrink-0" />
       <a
         href="mailto:welcome@maninipay.com"
-        className="text-sm text-gray-700 hover:text-green-600 transition-colors"
+        className="text-sm text-gray-300 hover:text-green-400 transition-colors"
       >
         welcome@maninipay.com
       </a>
@@ -586,7 +832,7 @@ export default function ContactSection() {
       <Phone className="w-5 h-5 text-green-500 flex-shrink-0" />
       <a
         href="tel:+61451059746"
-        className="text-sm text-gray-700 hover:text-green-600 transition-colors"
+        className="text-sm text-gray-300 hover:text-green-400 transition-colors"
       >
         +61 4 51059746
       </a>
@@ -597,7 +843,7 @@ export default function ContactSection() {
   <div className="my-4 border-t border-gray-200"></div>
 
   {/* Address 2 */}
-  <h5 className="text-sm sm:text-base font-semibold text-gray-900">Address 2</h5>
+  <h5 className="text-sm sm:text-base font-semibold text-white">Address 2</h5>
   <div className="space-y-3">
     <div className="flex items-center space-x-3">
       <MapPin className="w-5 h-5 text-green-500 flex-shrink-0" />
@@ -609,7 +855,7 @@ export default function ContactSection() {
       <Mail className="w-5 h-5 text-green-500 flex-shrink-0" />
       <a
         href="mailto:welcome@maninipay.com"
-        className="text-sm text-gray-700 hover:text-green-600 transition-colors"
+        className="text-sm text-gray-300 hover:text-green-400 transition-colors"
       >
         welcome@maninipay.com
       </a>
@@ -618,7 +864,7 @@ export default function ContactSection() {
       <Phone className="w-5 h-5 text-green-500 flex-shrink-0" />
       <a
         href="tel:+61451059746"
-        className="text-sm text-gray-700 hover:text-green-600 transition-colors"
+        className="text-sm text-gray-300 hover:text-green-400 transition-colors"
       >
         +61 4 51059746
       </a>
