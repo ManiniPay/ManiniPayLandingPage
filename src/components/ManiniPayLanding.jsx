@@ -33,17 +33,6 @@ export const ManiniPayLanding = () => {
     }
   };
 
-  const fadeIn = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
   const staggerContainer = {
     hidden: { opacity: 0 },
     visible: {
@@ -1263,49 +1252,45 @@ export const ManiniPayLanding = () => {
       {/* FOOTER */}
       <footer className="text-center py-10 text-sm bg-black bg-opacity-80 backdrop-blur-sm border-t border-green-500/20">
         <div className="flex flex-nowrap justify-center items-center gap-1 md:gap-4 mb-4 text-xs md:text-sm overflow-x-auto px-2">
-          <a 
-            href="#" 
-            className="hover:underline whitespace-nowrap"
-            onClick={(e) => {
-              e.preventDefault();
+          <button
+            type="button"
+            className="hover:underline whitespace-nowrap bg-transparent border-none p-0 cursor-pointer"
+            onClick={() => {
               scrollToSection(howItWorksRef);
             }}
           >
             How it Works
-          </a>
+          </button>
           <span className="text-white">|</span>
-          <a 
-            href="#" 
-            className="hover:underline whitespace-nowrap"
-            onClick={(e) => {
-              e.preventDefault();
+          <button
+            type="button"
+            className="hover:underline whitespace-nowrap bg-transparent border-none p-0 cursor-pointer"
+            onClick={() => {
               scrollToSection(contactRef);
             }}
           >
             Early Access
-          </a>
+          </button>
           <span className="text-white">|</span>
-          <a
-            href="#"
-            className="hover:underline whitespace-nowrap"
-            onClick={(e) => {
-              e.preventDefault();
+          <button
+            type="button"
+            className="hover:underline whitespace-nowrap bg-transparent border-none p-0 cursor-pointer"
+            onClick={() => {
               setShowVideo(true);
             }}
           >
             Official Video
-          </a>
+          </button>
           <span className="text-white">|</span>
-          <a
-            href="#"
-            className="hover:underline whitespace-nowrap"
-            onClick={(e) => {
-              e.preventDefault();
+          <button
+            type="button"
+            className="hover:underline whitespace-nowrap bg-transparent border-none p-0 cursor-pointer"
+            onClick={() => {
               scrollToSection(contactRef);
             }}
           >
             Contact
-          </a>
+          </button>
           <span className="text-white">|</span>
           <Link to="/privacy" className="hover:underline whitespace-nowrap">
   Privacy
