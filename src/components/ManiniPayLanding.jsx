@@ -1024,7 +1024,7 @@ export const ManiniPayLanding = () => {
             variants={staggerContainer}
           >
             {[
-              { items: ["✓ Landing page live", "✓ Early users joining the waitlist", "✓ MVP in testing", "✓ MVP Pilot Testing in March"] },
+              { items: ["✓ Landing page live", "✓ Early users joining the waitlist", "✓ March 2026 - MVP Testing"] },
               { items: ["✓ June-September 2026: Software Launch - MVP Released", "✓ Official launch October 2026", "✓ Selected as a Top 5 Fintech Startup for the Pacific Sandbox Accelerator"] },
             ].map((group, index) => (
               <motion.div 
