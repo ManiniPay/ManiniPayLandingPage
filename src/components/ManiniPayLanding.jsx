@@ -1191,7 +1191,7 @@ export const ManiniPayLanding = () => {
         >
           {[
             { date: "March 2026", event: "MVP Testing" },
-            { date: "June–September 2026", event: "Pilot Launch" },
+            { date: "June–September 2026", event: "Take the pilot out" },
             { date: "October 2026", event: "Official Launch" },
           ].map((item, index) => (
             <motion.li 
