@@ -12,6 +12,7 @@ export const ManiniPayLanding = () => {
   const storyRef = useRef(null);
   const solutionRef = useRef(null);
   const contactRef = useRef(null);
+  const timelineRef = useRef(null);
 
   // Scroll function - instant jump, no smooth scrolling
   const scrollToSection = (ref) => {
@@ -1023,8 +1024,8 @@ export const ManiniPayLanding = () => {
             variants={staggerContainer}
           >
             {[
-              { items: ["✓ Landing page live", "✓ Early users joining the waitlist", "✓ MVP in testing", "✓ Pilot launch in March"] },
-              { items: ["✓ June-September 2026: Pilot Launch", "✓ Official launch October 2026", "✓ Selected as a Top 5 Fintech Startup for the Pacific Sandbox Accelerator"] },
+              { items: ["✓ Landing page live", "✓ Early users joining the waitlist", "✓ MVP in testing", "✓ MVP Pilot Testing in March"] },
+              { items: ["✓ June-September 2026: Software Launch - MVP Released", "✓ Official launch October 2026", "✓ Selected as a Top 5 Fintech Startup for the Pacific Sandbox Accelerator"] },
             ].map((group, index) => (
               <motion.div 
                 key={index}
@@ -1061,7 +1062,7 @@ export const ManiniPayLanding = () => {
         </motion.p>
 
         <motion.button
-          onClick={() => scrollToSection(contactRef)}
+          onClick={() => scrollToSection(timelineRef)}
           className="mt-6 px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg relative overflow-hidden group"
           style={{
             background: "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 250, 0.95) 100%)",
@@ -1155,6 +1156,7 @@ export const ManiniPayLanding = () => {
 
       {/* TIMELINE SECTION */}
       <motion.section 
+        ref={timelineRef}
         className="px-6 md:px-20 py-16 text-left rounded-3xl mx-4 md:mx-10 my-10 relative overflow-hidden"
         style={{
           background: "linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(10, 20, 40, 0.8) 100%)",
